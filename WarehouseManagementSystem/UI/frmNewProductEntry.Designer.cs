@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNewProductEntry));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.txtStockAmount = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -526,6 +527,7 @@
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.txtPictureBox);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmNewProductEntry";
             this.Text = "frmNewProductEntry";
             this.Load += new System.EventHandler(this.frmNewProductEntry_Load);

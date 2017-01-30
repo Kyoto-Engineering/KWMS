@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewFeederStock));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.txtFeederName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.buttonSubmit = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -45,6 +46,14 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // txtFeederName
+            // 
+            this.txtFeederName.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFeederName.Location = new System.Drawing.Point(176, 46);
+            this.txtFeederName.Name = "txtFeederName";
+            this.txtFeederName.Size = new System.Drawing.Size(388, 29);
+            this.txtFeederName.TabIndex = 1;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -55,14 +64,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Feeder Name";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // txtFeederName
-            // 
-            this.txtFeederName.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFeederName.Location = new System.Drawing.Point(176, 46);
-            this.txtFeederName.Name = "txtFeederName";
-            this.txtFeederName.Size = new System.Drawing.Size(388, 29);
-            this.txtFeederName.TabIndex = 1;
             // 
             // buttonSubmit
             // 
@@ -85,6 +86,7 @@
             this.ClientSize = new System.Drawing.Size(619, 241);
             this.Controls.Add(this.buttonSubmit);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NewFeederStock";

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SampleDataGrid));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelg = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -76,6 +77,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelg);
             this.Controls.Add(this.dataGridView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SampleDataGrid";
             this.Text = "SampleDataGrid";
             this.Load += new System.EventHandler(this.SampleDataGrid_Load);
