@@ -85,8 +85,7 @@ namespace WarehouseManagementSystem.UI
         {
             listView2.View = View.Details;
             con = new SqlConnection(cs.DBConn);
-            string query = "SELECT ProductListSummary.ProductGenericDescription,ProductListSummary.ItemDescription, ProductQuotation.Quantity FROM   ProductQuotation INNER JOIN Quotation ON ProductQuotation.QuotationId = Quotation.QuotationId INNER JOIN  DeleveryOrder ON Quotation.QuotationId = DeleveryOrder.QuotationId INNER JOIN  ProductListSummary ON ProductQuotation.Sl = ProductListSummary.Sl where DeleveryOrder.DOiD='" + deliveryOrderCombo.Text + "'";
-           // string qry = "Select  RTRIM(FeederStock.RId),RTRIM(FeederStock.FeederId) from FeederStock where FeederStock.FeederId='"+feederId+"'";
+            string query = "SELECT ProductListSummary.ProductGenericDescription,ProductListSummary.ItemDescription, ProductQuotation.Quantity FROM   ProductQuotation INNER JOIN Quotation ON ProductQuotation.QuotationId = Quotation.QuotationId INNER JOIN  DeleveryOrder ON Quotation.QuotationId = DeleveryOrder.QuotationId INNER JOIN  ProductListSummary ON ProductQuotation.Sl = ProductListSummary.Sl where DeleveryOrder.DOiD='" + deliveryOrderCombo.Text + "'";       
             sda = new SqlDataAdapter(query, con);
             dt = new DataTable();
             sda.Fill(dt);

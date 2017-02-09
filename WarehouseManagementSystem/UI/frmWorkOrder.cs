@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseManagementSystem.DbGateway;
@@ -15,6 +16,9 @@ namespace WarehouseManagementSystem.UI
 {
     public partial class frmWorkOrder : Form
     {
+
+        const int kSplashUpdateInterval_ms = 50;
+        const int kMinAmountOfSplashTime_ms = 800;
         SqlConnection con;
         SqlCommand cmd;
         ConnectionString cs = new ConnectionString();
@@ -24,7 +28,30 @@ namespace WarehouseManagementSystem.UI
         {
             InitializeComponent();
         }
+        static Splash splash = null;
 
+        /// <summary>
+        /// Starts the splash screen on a separate thread
+        /// </summary>
+        static public void StartSplash()
+        {
+            // Instance a splash form given the image names
+            splash = new Splash(kSplashUpdateInterval_ms);
+
+            // Run the form
+            Application.Run(splash);
+        }
+
+        private void CloseSplash()
+        {
+            if (splash == null)
+                return;
+
+            // Shut down the splash screen
+            splash.Invoke(new EventHandler(splash.KillMe));
+            splash.Dispose();
+            splash = null;
+        }
         private void ManualComplete()
         {
             DialogResult dialogResult = MessageBox.Show("Are you Surely want To Complete or Done this Order ", "Confirm", MessageBoxButtons.YesNo);
@@ -148,11 +175,23 @@ namespace WarehouseManagementSystem.UI
         }
         private void frmWorkOrder_Load(object sender, EventArgs e)
         {
+            Application.UseWaitCursor = true;
+            Thread splashThread = new Thread(new ThreadStart(StartSplash));
+            splashThread.Start();
+
+            // Pretend that our application is doing a bunch of loading and
+            // initialization
+            Thread.Sleep(kMinAmountOfSplashTime_ms / 8);
+
+
+
             cmbWorkOrderNo.Focus();
             FillWOrderCombo();
         
             GetData();
             submittedBy = LoginForm.uId2.ToString();
+            CloseSplash();
+            Application.UseWaitCursor = false;
         }
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -327,11 +366,14 @@ namespace WarehouseManagementSystem.UI
 
         private void txtOrderPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // allows 0-9, backspace, and decimal
             if (((e.KeyChar < 48 || e.KeyChar > 57) && e.KeyChar != 8 && e.KeyChar != 46))
             {
                 e.Handled = true;
                 return;
+            }
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
             }
         }
 

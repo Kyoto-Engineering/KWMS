@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseManagementSystem.DbGateway;
@@ -17,6 +18,8 @@ namespace WarehouseManagementSystem.UI
 {
     public partial class Requisition : Form
     {
+        const int kSplashUpdateInterval_ms = 50;
+        const int kMinAmountOfSplashTime_ms = 800;
         private SqlConnection con;
         private SqlCommand cmd;
         private SqlDataReader rdr;
@@ -31,7 +34,30 @@ namespace WarehouseManagementSystem.UI
         {
             InitializeComponent();
         }
+        static Splash splash = null;
 
+        /// <summary>
+        /// Starts the splash screen on a separate thread
+        /// </summary>
+        static public void StartSplash()
+        {
+            // Instance a splash form given the image names
+            splash = new Splash(kSplashUpdateInterval_ms);
+
+            // Run the form
+            Application.Run(splash);
+        }
+
+        private void CloseSplash()
+        {
+            if (splash == null)
+                return;
+
+            // Shut down the splash screen
+            splash.Invoke(new EventHandler(splash.KillMe));
+            splash.Dispose();
+            splash = null;
+        }
         private void txt1ProductId_TextChanged(object sender, EventArgs e)
         {
             try
@@ -99,12 +125,26 @@ namespace WarehouseManagementSystem.UI
         }
         private void Requisition_Load(object sender, EventArgs e)
         {
+
+            Application.UseWaitCursor = true;
+            Thread splashThread = new Thread(new ThreadStart(StartSplash));
+            splashThread.Start();
+
+            // Pretend that our application is doing a bunch of loading and
+            // initialization
+            Thread.Sleep(kMinAmountOfSplashTime_ms / 8);
+
+
+
+
             //label2.Visible = false;
             //txtRequisitionNo.Visible = false;
             FeederStockComboPopulate();
             //txtRequisitionNo.Focus();
             submittedBy = LoginForm.uId2.ToString();
             GetData();
+            CloseSplash();
+            Application.UseWaitCursor = false;
         }
 
         private void txtProductName_TextChanged(object sender, EventArgs e)
@@ -260,13 +300,22 @@ namespace WarehouseManagementSystem.UI
         private void removeButton_Click(object sender, EventArgs e)
         {
            
-            for (int i = listView1.Items.Count - 1; i >= 0; i--)
+            if (listView1.SelectedItems!=null)
             {
-                if (listView1.Items[i].Selected)
+                for (int i = listView1.Items.Count - 1; i >= 0; i--)
                 {
-                    listView1.Items[i].Remove();
+                    if (listView1.Items[i].Selected)
+                    {
+                        listView1.Items[i].Remove();
+                    }
                 }
             }
+            else
+            {
+                MessageBox.Show("Please Select  the row  which you want to select", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+           
         }               
         private void GetNewId()
         {

@@ -20,10 +20,13 @@ namespace WarehouseManagementSystem.UI
 
         private void btnWorkOrder_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
-            dynamic aform = new PreviousOrderList();
-            aform.ShowDialog();
-            this.Visible = true;
+            this.Hide();
+            PreviousOrderList frm=new PreviousOrderList();
+            frm.Show();
+            //this.Visible = false;
+            //dynamic aform = new PreviousOrderList();
+            //aform.ShowDialog();
+            //this.Visible = true;
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -117,6 +120,11 @@ namespace WarehouseManagementSystem.UI
             dynamic frm = new DeliveryOrderApproval();
             frm.ShowDialog();
             this.Visible = true;  
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

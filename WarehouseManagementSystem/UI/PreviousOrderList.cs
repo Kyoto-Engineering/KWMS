@@ -26,13 +26,13 @@ namespace WarehouseManagementSystem.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-           // this.Hide();
-            SecondStepOfPurchaseOrder mn=new SecondStepOfPurchaseOrder();
+            this.Hide();
+            SecondStepOfPurchaseOrder mn = new SecondStepOfPurchaseOrder();
             mn.Show();
             GetData2();
 
             //this.Visible = false;
-            //dynamic my=new OrderWorkOrder();
+            //dynamic my = new SecondStepOfPurchaseOrder();
             //this.Visible = true;
             //my.ShowDialog();
             //GetData2();
@@ -110,6 +110,18 @@ namespace WarehouseManagementSystem.UI
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+                 this.Hide();
+            frmMainUI frm=new frmMainUI();
+                  frm.Show();
         }
     }
 }

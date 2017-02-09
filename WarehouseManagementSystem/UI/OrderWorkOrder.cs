@@ -108,8 +108,10 @@ namespace WarehouseManagementSystem.UI
                 MessageBox.Show("Successfully Submitted.", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 GetData2();
                 Reset3();
+                this.Dispose();
                                    this.Hide();
-                SecondStepOfPurchaseOrder frm=new SecondStepOfPurchaseOrder();
+                             PreviousOrderList frm = new PreviousOrderList();
+                                        frm.GetData2();
                                        frm.Show();
 
             }
