@@ -45,10 +45,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.packingListNoTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.purchaseOrderNoTextBox = new System.Windows.Forms.TextBox();
+            this.txtImportOrderNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label8 = new System.Windows.Forms.Label();
+            this.closeButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +69,7 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.packingListNoTextBox);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.purchaseOrderNoTextBox);
+            this.groupBox1.Controls.Add(this.txtImportOrderNo);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(23, 65);
             this.groupBox1.Name = "groupBox1";
@@ -232,15 +233,15 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "Order Date";
             // 
-            // purchaseOrderNoTextBox
+            // txtImportOrderNo
             // 
-            this.purchaseOrderNoTextBox.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.purchaseOrderNoTextBox.Location = new System.Drawing.Point(310, 25);
-            this.purchaseOrderNoTextBox.Name = "purchaseOrderNoTextBox";
-            this.purchaseOrderNoTextBox.ReadOnly = true;
-            this.purchaseOrderNoTextBox.Size = new System.Drawing.Size(279, 32);
-            this.purchaseOrderNoTextBox.TabIndex = 0;
-            this.purchaseOrderNoTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.purchaseOrderNoTextBox_KeyDown);
+            this.txtImportOrderNo.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtImportOrderNo.Location = new System.Drawing.Point(310, 25);
+            this.txtImportOrderNo.Name = "txtImportOrderNo";
+            this.txtImportOrderNo.ReadOnly = true;
+            this.txtImportOrderNo.Size = new System.Drawing.Size(279, 32);
+            this.txtImportOrderNo.TabIndex = 0;
+            this.txtImportOrderNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.purchaseOrderNoTextBox_KeyDown);
             // 
             // label1
             // 
@@ -262,11 +263,24 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Yellow;
-            this.label8.Location = new System.Drawing.Point(65, 9);
+            this.label8.Location = new System.Drawing.Point(19, 9);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(611, 22);
             this.label8.TabIndex = 2;
             this.label8.Text = "Check that you have entered Right Information. To edit click  Edit button.";
+            // 
+            // closeButton
+            // 
+            this.closeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.closeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.closeButton.ForeColor = System.Drawing.Color.Blue;
+            this.closeButton.Location = new System.Drawing.Point(693, 2);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(66, 46);
+            this.closeButton.TabIndex = 3;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = false;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // OrderWorkOrder
             // 
@@ -274,6 +288,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.ClientSize = new System.Drawing.Size(762, 545);
+            this.ControlBox = false;
+            this.Controls.Add(this.closeButton);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -299,7 +315,7 @@
         private System.Windows.Forms.Label label5;
         public  System.Windows.Forms.TextBox packingListNoTextBox;
         private System.Windows.Forms.Label label2;
-        public  System.Windows.Forms.TextBox purchaseOrderNoTextBox;
+        public  System.Windows.Forms.TextBox txtImportOrderNo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
@@ -311,5 +327,6 @@
         public  System.Windows.Forms.DateTimePicker importOrderDate;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button closeButton;
     }
 }

@@ -20,10 +20,9 @@ namespace WarehouseManagementSystem.UI
 
         private void btnWorkOrder_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
-            dynamic aform = new PreviousOrderList();
-            aform.ShowDialog();
-            this.Visible = true;
+            this.Hide();
+            PreviousOrderList frm = new PreviousOrderList();
+            frm.Show();
         }
 
         private void registerButton_Click(object sender, EventArgs e)

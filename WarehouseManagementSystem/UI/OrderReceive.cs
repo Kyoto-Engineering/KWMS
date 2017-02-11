@@ -77,8 +77,9 @@ namespace WarehouseManagementSystem.UI
             cmbProductId.SelectedIndex = -1;
             cmbProductId.SelectedIndexChanged += cmbProductId_SelectedIndexChanged;
             receiveDate.Text = DateTime.Today.ToString();
-            receiveQuantityTextBox.Text = "";
-            receivePriceTextBox.Text = "";
+            receiveQuantityTextBox.Clear();
+            receivePriceTextBox.Clear();
+            txtCOGSUnitPrice.Clear();
         }
 
         private void ManualComplete()
@@ -289,7 +290,30 @@ namespace WarehouseManagementSystem.UI
             PopulatePurchaseOrderNo();
             cmbPurchaseOrderNo.Focus();
         }
+        private void DataChangedByImportOrderNumber()
+        {
+            try
+            {
+                con = new SqlConnection(cs.DBConn);
+                con.Open();
+                String sql = "SELECT RTRIM(FeederStockDetails.FeederName),RTRIM(MasterStocks.ImportOrderNo),RTRIM(Requisition.RequisitionNo),RTRIM(MasterStocks.MStockId),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(RequisitionList.Quantity),RTRIM(RequisitionList.RId)  FROM Requisition INNER JOIN FeederStockDetails ON Requisition.FeederId = FeederStockDetails.FeederId INNER JOIN Requisition AS Requisition_1 ON Requisition.ReqId = Requisition_1.ReqId INNER JOIN RequisitionList ON Requisition.ReqId = RequisitionList.ReqId AND Requisition_1.ReqId = RequisitionList.ReqId INNER JOIN  MasterStocks ON RequisitionList.MStockId = MasterStocks.MStockId INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl where Requisition.RequisitionNo='" + cmbRequisitionNo.Text + "' and RequisitionList.Statuss is Null order by MasterStocks.MStockId asc";
+                //string sql =" SELECT RTRIM(MasterStocks.ImportOrderNo),RTRIM(Requisition.RequisitionNo),RTRIM(MasterStocks.MStockId),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(RequisitionList.Quantity) FROM ((Requisition INNER JOIN RequisitionList on Requisition.ReqId=RequisitionList.ReqId) INNER JOIN MasterStocks ON MasterStocks.MStockId = RequisitionList.MStockId) INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl where Requisition.RequisitionNo='"+cmbRequisitionNo.Text+"' order by MasterStocks.MStockId asc";
+                cmd = new SqlCommand(sql, con);
+                rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                dataGridView1.Rows.Clear();
+                while (rdr.Read() == true)
+                {
+                    dataGridView1.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4], rdr[5], rdr[6], rdr[7]);
+                }
+                con.Close();
 
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void cmbWorkOrderNo_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbProductId.Focus();
@@ -347,12 +371,7 @@ namespace WarehouseManagementSystem.UI
             receiveDate.Focus();
         }
 
-        //private void Reset3()
-        //{
-        //    cmbPurchaseOrderNo.SelectedIndex = -1;
-        //    cmbProductId.SelectedIndex = -1;
-        //    receiveDate.Text = DateTime.Today.ToString();
-        //}
+        
         private void SaveSTatus()
         {
             try
@@ -381,11 +400,13 @@ namespace WarehouseManagementSystem.UI
 
         private void receivePriceTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // allows 0-9, backspace, and decimal
-            if (((e.KeyChar < 48 || e.KeyChar > 57) && e.KeyChar != 8 && e.KeyChar != 46))
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != '\b' && e.KeyChar != '.')
             {
                 e.Handled = true;
-                return;
+            }
+            if (e.KeyChar == '.' && receivePriceTextBox.Text.Contains("."))
+            {
+                e.Handled = true;
             }
         }
 
@@ -432,13 +453,19 @@ namespace WarehouseManagementSystem.UI
                 receiveOrderButton.Focus();
                 e.Handled = true;
             }
-            
-            
-            
-            //if (e.KeyCode == Keys.Enter)
-            //{
-            //    receiveOrderButton_Click(this, new EventArgs());
-            //}
+                                              
+        }
+
+        private void txtCOGSUnitPrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != '\b' && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+            if (e.KeyChar == '.' && txtCOGSUnitPrice.Text.Contains("."))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

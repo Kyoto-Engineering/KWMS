@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseManagementSystem.DbGateway;
+using WarehouseManagementSystem.LoginUI;
 
 namespace WarehouseManagementSystem.UI
 {
@@ -25,7 +26,7 @@ namespace WarehouseManagementSystem.UI
         }
         private void Reset3()
         {
-            purchaseOrderNoTextBox.Text = "";
+            txtImportOrderNo.Text = "";
             importOrderDate.Text = "";
             lcNumberTextBox.Text = "";
             lcDate.Text = "";
@@ -36,10 +37,10 @@ namespace WarehouseManagementSystem.UI
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (purchaseOrderNoTextBox.Text == "")
+            if (txtImportOrderNo.Text == "")
             {
                 MessageBox.Show("Please type Purchase Order", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                purchaseOrderNoTextBox.Focus();
+                txtImportOrderNo.Focus();
                 return;
             }
            if (invoiceNumberTextBox.Text == "")
@@ -60,7 +61,7 @@ namespace WarehouseManagementSystem.UI
 
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string ct = "select ImportOrderNo from ImportOrder where ImportOrderNo='" + purchaseOrderNoTextBox.Text + "'";
+                string ct = "select ImportOrderNo from ImportOrder where ImportOrderNo='" + txtImportOrderNo.Text + "'";
 
                 cmd = new SqlCommand(ct);
                 cmd.Connection = con;
@@ -69,8 +70,8 @@ namespace WarehouseManagementSystem.UI
                 if (rdr.Read())
                 {
                     MessageBox.Show("This Import Order Already Exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    purchaseOrderNoTextBox.Text = "";
-                    purchaseOrderNoTextBox.Focus();
+                    txtImportOrderNo.Text = "";
+                    txtImportOrderNo.Focus();
 
 
                     if ((rdr != null))
@@ -82,16 +83,20 @@ namespace WarehouseManagementSystem.UI
 
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string cb = "insert into ImportOrder(ImportOrderNo,OrderDate,LCNumber,LCDate,InvoiceNumber,InvoiceDate,PackingListNo,OrderStatus,ReceiveStatus) VALUES (@wOrderNo,@Od1,@lcNo,@lcDate,@invoiceNumber,@Id2,@packingListNo,'NewOrder','NewOrder')";
+                string cb = "insert into ImportOrder(ImportOrderNo,OrderDate,LCNumber,LCDate,InvoiceNumber,InvoiceDate,PackingListNo,OrderStatus,ReceiveStatus,OrderByUId,OrderEntryDate) VALUES (@d1,@d2,@d3,@d4,@d5,@d6,@d7,@d8,@d9,@d10,@d11)";
                 cmd = new SqlCommand(cb);
                 cmd.Connection = con;
-                cmd.Parameters.AddWithValue("@wOrderNo", purchaseOrderNoTextBox.Text);
-                cmd.Parameters.AddWithValue("@Od1", Convert.ToDateTime(importOrderDate.Value, System.Globalization.CultureInfo.GetCultureInfo("hi-IN").DateTimeFormat));
-                cmd.Parameters.AddWithValue("@lcNo", lcNumberTextBox.Text);
-                cmd.Parameters.AddWithValue("@lcDate", Convert.ToDateTime(lcDate.Value, System.Globalization.CultureInfo.GetCultureInfo("hi-IN").DateTimeFormat));
-                cmd.Parameters.AddWithValue("@invoiceNumber", invoiceNumberTextBox.Text);
-                cmd.Parameters.AddWithValue("@Id2", Convert.ToDateTime(invoiceDate.Value, System.Globalization.CultureInfo.GetCultureInfo("hi-IN").DateTimeFormat));
-                cmd.Parameters.AddWithValue("@packingListNo", packingListNoTextBox.Text);
+                cmd.Parameters.AddWithValue("@d1", txtImportOrderNo.Text);
+                cmd.Parameters.AddWithValue("@d2", Convert.ToDateTime(importOrderDate.Value, System.Globalization.CultureInfo.GetCultureInfo("hi-IN").DateTimeFormat));
+                cmd.Parameters.AddWithValue("@d3", lcNumberTextBox.Text);
+                cmd.Parameters.AddWithValue("@d4", Convert.ToDateTime(lcDate.Value, System.Globalization.CultureInfo.GetCultureInfo("hi-IN").DateTimeFormat));
+                cmd.Parameters.AddWithValue("@d5", invoiceNumberTextBox.Text);
+                cmd.Parameters.AddWithValue("@d6", Convert.ToDateTime(invoiceDate.Value, System.Globalization.CultureInfo.GetCultureInfo("hi-IN").DateTimeFormat));
+                cmd.Parameters.AddWithValue("@d7", packingListNoTextBox.Text);
+                cmd.Parameters.AddWithValue("@d8", "NewOrder");
+                cmd.Parameters.AddWithValue("@d9", "NewOrder");
+                cmd.Parameters.AddWithValue("@d10",submittedBy);
+                cmd.Parameters.AddWithValue("@d11", System.DateTime.UtcNow.ToLocalTime());
                 cmd.ExecuteReader();
                 con.Close();
 
@@ -106,10 +111,12 @@ namespace WarehouseManagementSystem.UI
                     fullName = (rdr.GetString(0));
                 }
                 MessageBox.Show("Successfully Submitted.", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                GetData2();
+                
                 Reset3();
+                this.Dispose();
                                    this.Hide();
-                SecondStepOfPurchaseOrder frm=new SecondStepOfPurchaseOrder();
+                        PreviousOrderList frm = new PreviousOrderList();
+                                      frm.GetData2();
                                        frm.Show();
 
             }
@@ -142,21 +149,22 @@ namespace WarehouseManagementSystem.UI
         }
         private void OrderWorkOrder_Load(object sender, EventArgs e)
         {
-            purchaseOrderNoTextBox.Focus();
+            submittedBy = LoginForm.uId2.ToString();
+            txtImportOrderNo.Focus();
             timer1.Interval = 500;
             timer1.Start();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            purchaseOrderNoTextBox.ReadOnly=false;
+            txtImportOrderNo.ReadOnly=false;
             importOrderDate.Enabled = true;
             lcNumberTextBox.ReadOnly = false;
             lcDate.Enabled = true;
             invoiceNumberTextBox.ReadOnly = false;
             invoiceDate.Enabled = true;
             packingListNoTextBox.ReadOnly = false;
-            purchaseOrderNoTextBox.Focus();
+            txtImportOrderNo.Focus();
 
 
 
@@ -217,6 +225,13 @@ namespace WarehouseManagementSystem.UI
             {
                 button1_Click(this, new EventArgs());
             }
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+       PreviousOrderList frm=new PreviousOrderList();
+            frm.Show();
         }
     }
 }

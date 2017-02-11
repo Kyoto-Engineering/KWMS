@@ -56,7 +56,7 @@
             this.removeButton = new System.Windows.Forms.Button();
             this.submitButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtUnitPrice = new System.Windows.Forms.TextBox();
+            this.txtRequestedQuantity = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -253,7 +253,7 @@
             this.groupBox5.Controls.Add(this.removeButton);
             this.groupBox5.Controls.Add(this.submitButton);
             this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.txtUnitPrice);
+            this.groupBox5.Controls.Add(this.txtRequestedQuantity);
             this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.textBox1);
             this.groupBox5.Controls.Add(this.label8);
@@ -367,16 +367,17 @@
             this.label7.TabIndex = 3;
             this.label7.Text = "label3";
             // 
-            // txtUnitPrice
+            // txtRequestedQuantity
             // 
-            this.txtUnitPrice.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUnitPrice.Location = new System.Drawing.Point(202, 198);
-            this.txtUnitPrice.Name = "txtUnitPrice";
-            this.txtUnitPrice.Size = new System.Drawing.Size(224, 32);
-            this.txtUnitPrice.TabIndex = 4;
-            this.txtUnitPrice.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUnitPrice_KeyDown);
-            this.txtUnitPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUnitPrice_KeyPress);
-            this.txtUnitPrice.Validating += new System.ComponentModel.CancelEventHandler(this.txtUnitPrice_Validating);
+            this.txtRequestedQuantity.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRequestedQuantity.Location = new System.Drawing.Point(202, 198);
+            this.txtRequestedQuantity.Name = "txtRequestedQuantity";
+            this.txtRequestedQuantity.Size = new System.Drawing.Size(224, 32);
+            this.txtRequestedQuantity.TabIndex = 4;
+            this.txtRequestedQuantity.Enter += new System.EventHandler(this.txtUnitPrice_Enter);
+            this.txtRequestedQuantity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUnitPrice_KeyDown);
+            this.txtRequestedQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUnitPrice_KeyPress);
+            this.txtRequestedQuantity.Validating += new System.ComponentModel.CancelEventHandler(this.txtUnitPrice_Validating);
             // 
             // label9
             // 
@@ -556,7 +557,7 @@
         private System.Windows.Forms.Button removeButton;
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtUnitPrice;
+        private System.Windows.Forms.TextBox txtRequestedQuantity;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label8;

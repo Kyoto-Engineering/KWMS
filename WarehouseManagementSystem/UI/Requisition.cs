@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseManagementSystem.DbGateway;
@@ -17,6 +18,8 @@ namespace WarehouseManagementSystem.UI
 {
     public partial class Requisition : Form
     {
+        const int kSplashUpdateInterval_ms = 50;
+        const int kMinAmountOfSplashTime_ms = 800;
         private SqlConnection con;
         private SqlCommand cmd;
         private SqlDataReader rdr;
@@ -97,14 +100,54 @@ namespace WarehouseManagementSystem.UI
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        static Splash splash = null;
+
+        /// <summary>
+        /// Starts the splash screen on a separate thread
+        /// </summary>
+        static public void StartSplash()
+        {
+            // Instance a splash form given the image names
+            splash = new Splash(kSplashUpdateInterval_ms);
+
+            // Run the form
+            Application.Run(splash);
+        }
+
+        private void CloseSplash()
+        {
+            if (splash == null)
+                return;
+
+            // Shut down the splash screen
+            splash.Invoke(new EventHandler(splash.KillMe));
+            splash.Dispose();
+            splash = null;
+        }
+
+
         private void Requisition_Load(object sender, EventArgs e)
         {
+            Application.UseWaitCursor = true;
+            Thread splashThread = new Thread(new ThreadStart(StartSplash));
+            splashThread.Start();
+
+            // Pretend that our application is doing a bunch of loading and
+            // initialization
+            Thread.Sleep(kMinAmountOfSplashTime_ms / 8);
+
+
+            groupBox1.Enabled = false;
+
             //label2.Visible = false;
             //txtRequisitionNo.Visible = false;
             FeederStockComboPopulate();
             //txtRequisitionNo.Focus();
             submittedBy = LoginForm.uId2.ToString();
             GetData();
+
+            CloseSplash();
+            Application.UseWaitCursor = false;
         }
 
         private void txtProductName_TextChanged(object sender, EventArgs e)
@@ -197,10 +240,10 @@ namespace WarehouseManagementSystem.UI
                 txtQuantity.Focus();
                 return;
             }
-            if (txtUnitPrice.Text == "")
+            if (txtRequestedQuantity.Text == "")
             {
                 MessageBox.Show("Please enter Order Quantity.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtUnitPrice.Focus();
+                txtRequestedQuantity.Focus();
                 return;
             }
             for (int i = 0; i <= listView1.Items.Count - 1; i++)
@@ -225,12 +268,12 @@ namespace WarehouseManagementSystem.UI
                     lst.SubItems.Add(txtImportOrderNo.Text);
                     lst.SubItems.Add(txtProductId.Text);
                     lst.SubItems.Add(txtQuantity.Text);
-                    lst.SubItems.Add(txtUnitPrice.Text);
+                    lst.SubItems.Add(txtRequestedQuantity.Text);
                     listView1.Items.Add(lst);
                     txtProductId.Text = "";
                     txtImportOrderNo.Text = "";
                     txtQuantity.Text = "";
-                    txtUnitPrice.Text = "";
+                    txtRequestedQuantity.Text = "";
                     cmbFeederStock.Enabled = false;
                     return;
 
@@ -239,12 +282,12 @@ namespace WarehouseManagementSystem.UI
                 lst1.SubItems.Add(txtImportOrderNo.Text);
                 lst1.SubItems.Add(txtProductId.Text);
                 lst1.SubItems.Add(txtQuantity.Text);
-                lst1.SubItems.Add(txtUnitPrice.Text);
+                lst1.SubItems.Add(txtRequestedQuantity.Text);
                 listView1.Items.Add(lst1);
                 txtImportOrderNo.Text = "";
                 txtProductId.Text = "";
                 txtQuantity.Text = "";
-                txtUnitPrice.Text = "";
+                txtRequestedQuantity.Text = "";
                 cmbFeederStock.Enabled = false;
                 return;
 
@@ -259,12 +302,19 @@ namespace WarehouseManagementSystem.UI
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-           
-            for (int i = listView1.Items.Count - 1; i >= 0; i--)
+            if (listView1.SelectedItems.Count < 1)
             {
-                if (listView1.Items[i].Selected)
+                MessageBox.Show("Please Select the item which you want to remove", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                for (int i = listView1.Items.Count - 1; i >= 0; i--)
                 {
-                    listView1.Items[i].Remove();
+                    if (listView1.Items[i].Selected)
+                    {
+                        listView1.Items[i].Remove();
+                    }
                 }
             }
         }               
@@ -539,7 +589,7 @@ namespace WarehouseManagementSystem.UI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                txtUnitPrice.Focus();
+                txtRequestedQuantity.Focus();
                 e.Handled = true;
             }
         }
@@ -555,22 +605,25 @@ namespace WarehouseManagementSystem.UI
 
         private void txtUnitPrice_Validating(object sender, CancelEventArgs e)
         {
-            decimal x = Convert.ToDecimal(txtUnitPrice.Text);
-            decimal y = Convert.ToDecimal(txtQuantity.Text);
+            if (!string.IsNullOrEmpty(txtRequestedQuantity.Text))
+            {
+                decimal x = Convert.ToDecimal(txtRequestedQuantity.Text);
+                decimal y = Convert.ToDecimal(txtQuantity.Text);
 
-            if (x == 0)
-            {
-                MessageBox.Show("Requested Amount Can Not be Zero", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtUnitPrice.Clear();
-                txtUnitPrice.Focus();
-                return;
-            }
-            if (x > y)
-            {
-                MessageBox.Show("Requested Amount Can Not Be Greater Than Available Amount", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtUnitPrice.Clear();
-                txtUnitPrice.Focus();
-                return;
+                if (x == 0)
+                {
+                    MessageBox.Show("Requested Amount Can Not be Zero", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtRequestedQuantity.Clear();
+                    txtRequestedQuantity.Focus();
+                    return;
+                }
+                if (x > y)
+                {
+                    MessageBox.Show("Requested Amount Can Not Be Greater Than Available Amount", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtRequestedQuantity.Clear();
+                    txtRequestedQuantity.Focus();
+                    return;
+                }
             }
         }
 
@@ -592,6 +645,7 @@ namespace WarehouseManagementSystem.UI
 
                 }
 
+                groupBox1.Enabled = true;
                 if ((rdr != null))
                 {
                     rdr.Close();
@@ -609,6 +663,8 @@ namespace WarehouseManagementSystem.UI
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            cmbFeederStock.Enabled = false;
+
             try
             {
                 DataGridViewRow dr = dataGridView1.CurrentRow;
@@ -628,6 +684,15 @@ namespace WarehouseManagementSystem.UI
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtUnitPrice_Enter(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtQuantity.Text))
+            {
+                MessageBox.Show("Please select  a Product First.", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtQuantity.Focus();
+            }
         }
     }
 }

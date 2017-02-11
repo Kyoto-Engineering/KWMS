@@ -37,7 +37,7 @@
             this.txtPackingListNo = new System.Windows.Forms.TextBox();
             this.txtInvoiceNumber = new System.Windows.Forms.TextBox();
             this.txtLCNumber = new System.Windows.Forms.TextBox();
-            this.txtPurchaseOrder = new System.Windows.Forms.TextBox();
+            this.txtImportOrder = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -46,6 +46,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.closeButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,7 +59,7 @@
             this.groupBox1.Controls.Add(this.txtPackingListNo);
             this.groupBox1.Controls.Add(this.txtInvoiceNumber);
             this.groupBox1.Controls.Add(this.txtLCNumber);
-            this.groupBox1.Controls.Add(this.txtPurchaseOrder);
+            this.groupBox1.Controls.Add(this.txtImportOrder);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label7);
@@ -143,14 +144,14 @@
             this.txtLCNumber.TabIndex = 2;
             this.txtLCNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLCNumber_KeyDown);
             // 
-            // txtPurchaseOrder
+            // txtImportOrder
             // 
-            this.txtPurchaseOrder.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPurchaseOrder.Location = new System.Drawing.Point(288, 56);
-            this.txtPurchaseOrder.Name = "txtPurchaseOrder";
-            this.txtPurchaseOrder.Size = new System.Drawing.Size(279, 32);
-            this.txtPurchaseOrder.TabIndex = 0;
-            this.txtPurchaseOrder.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPurchaseOrder_KeyDown);
+            this.txtImportOrder.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtImportOrder.Location = new System.Drawing.Point(288, 56);
+            this.txtImportOrder.Name = "txtImportOrder";
+            this.txtImportOrder.Size = new System.Drawing.Size(279, 32);
+            this.txtImportOrder.TabIndex = 0;
+            this.txtImportOrder.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPurchaseOrder_KeyDown);
             // 
             // label4
             // 
@@ -242,12 +243,27 @@
             this.textBox2.TabIndex = 3;
             this.textBox2.Text = "Create New Consignment ";
             // 
+            // closeButton
+            // 
+            this.closeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.closeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.closeButton.ForeColor = System.Drawing.Color.Blue;
+            this.closeButton.Location = new System.Drawing.Point(735, 2);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(68, 53);
+            this.closeButton.TabIndex = 4;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = false;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            // 
             // SecondStepOfPurchaseOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Olive;
             this.ClientSize = new System.Drawing.Size(805, 654);
+            this.ControlBox = false;
+            this.Controls.Add(this.closeButton);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -268,7 +284,7 @@
         public  System.Windows.Forms.TextBox txtPackingListNo;
         public  System.Windows.Forms.TextBox txtInvoiceNumber;
         public  System.Windows.Forms.TextBox txtLCNumber;
-        public System.Windows.Forms.TextBox txtPurchaseOrder;
+        public System.Windows.Forms.TextBox txtImportOrder;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label7;
@@ -281,5 +297,6 @@
         public  System.Windows.Forms.DateTimePicker txtLCDate;
         public  System.Windows.Forms.DateTimePicker txtOrderDate;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button closeButton;
     }
 }

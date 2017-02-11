@@ -60,17 +60,19 @@
             this.itemDescriptionTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txtProduct = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.k = new System.Windows.Forms.Label();
+            this.g = new System.Windows.Forms.Label();
+            this.dataGridViewk = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewk)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -215,6 +217,7 @@
             this.txtItemCode.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtItemCode.Location = new System.Drawing.Point(205, 137);
             this.txtItemCode.Name = "txtItemCode";
+            this.txtItemCode.ReadOnly = true;
             this.txtItemCode.Size = new System.Drawing.Size(246, 32);
             this.txtItemCode.TabIndex = 2;
             this.txtItemCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtItemCode_KeyDown);
@@ -281,6 +284,7 @@
             this.txtProductId.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtProductId.Location = new System.Drawing.Point(205, 90);
             this.txtProductId.Name = "txtProductId";
+            this.txtProductId.ReadOnly = true;
             this.txtProductId.Size = new System.Drawing.Size(246, 32);
             this.txtProductId.TabIndex = 1;
             this.txtProductId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtProductId_KeyDown);
@@ -318,10 +322,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.dataGridViewk);
             this.groupBox2.Controls.Add(this.groupBox5);
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.dataGridView1);
             this.groupBox2.Location = new System.Drawing.Point(635, 8);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(628, 656);
@@ -345,9 +349,9 @@
             // productNameTextBox
             // 
             this.productNameTextBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.productNameTextBox.Location = new System.Drawing.Point(30, 31);
+            this.productNameTextBox.Location = new System.Drawing.Point(19, 31);
             this.productNameTextBox.Name = "productNameTextBox";
-            this.productNameTextBox.Size = new System.Drawing.Size(145, 26);
+            this.productNameTextBox.Size = new System.Drawing.Size(175, 26);
             this.productNameTextBox.TabIndex = 0;
             this.productNameTextBox.TextChanged += new System.EventHandler(this.productNameTextBox_TextChanged);
             // 
@@ -393,67 +397,79 @@
             this.txtProduct.TabIndex = 0;
             this.txtProduct.TextChanged += new System.EventHandler(this.txtProduct_TextChanged);
             // 
-            // dataGridView1
+            // k
             // 
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column8,
-            this.Column3,
+            this.k.AutoSize = true;
+            this.k.Location = new System.Drawing.Point(24, 671);
+            this.k.Name = "k";
+            this.k.Size = new System.Drawing.Size(13, 13);
+            this.k.TabIndex = 26;
+            this.k.Text = "k";
+            this.k.Visible = false;
+            // 
+            // g
+            // 
+            this.g.AutoSize = true;
+            this.g.Location = new System.Drawing.Point(68, 671);
+            this.g.Name = "g";
+            this.g.Size = new System.Drawing.Size(13, 13);
+            this.g.TabIndex = 27;
+            this.g.Text = "g";
+            this.g.Visible = false;
+            // 
+            // dataGridViewk
+            // 
+            this.dataGridViewk.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewk.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
-            this.Column2});
+            this.Column2,
+            this.Column3,
+            this.Column4});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Blue;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.GridColor = System.Drawing.Color.Cyan;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 115);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(616, 529);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
-            this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
-            this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "Product ID";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            this.Column8.Width = 80;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Product Generic Description";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
+            this.dataGridViewk.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewk.Location = new System.Drawing.Point(10, 109);
+            this.dataGridViewk.Name = "dataGridViewk";
+            this.dataGridViewk.Size = new System.Drawing.Size(609, 541);
+            this.dataGridViewk.TabIndex = 121;
+            this.dataGridViewk.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewk_CellMouseClick);
             // 
             // Column1
             // 
-            this.Column1.HeaderText = "Item Description";
+            this.Column1.HeaderText = "Product Id";
             this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
             // 
             // Column2
             // 
-            this.Column2.HeaderText = "Item Code";
+            this.Column2.HeaderText = "Product Generic Description";
             this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 160;
+            this.Column2.Width = 180;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Item Description";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 160;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Item Code";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 120;
             // 
             // frmWorkOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Olive;
-            this.ClientSize = new System.Drawing.Size(1275, 664);
+            this.ClientSize = new System.Drawing.Size(1275, 690);
+            this.Controls.Add(this.g);
+            this.Controls.Add(this.k);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
@@ -463,6 +479,7 @@
             this.Name = "frmWorkOrder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmWorkOrder";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmWorkOrder_FormClosed);
             this.Load += new System.EventHandler(this.frmWorkOrder_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -473,7 +490,7 @@
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewk)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -490,7 +507,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox txtProduct;
-        public System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtItemCode;
         private System.Windows.Forms.ListView listView1;
@@ -512,9 +528,12 @@
         private System.Windows.Forms.TextBox productNameTextBox;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox itemDescriptionTextBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Label k;
+        private System.Windows.Forms.Label g;
+        private System.Windows.Forms.DataGridView dataGridViewk;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }
