@@ -20,7 +20,7 @@ namespace WarehouseManagementSystem.UI
         private SqlDataReader rdr;
         ConnectionString cs = new ConnectionString();
         public int affectedRows1, affectedRows2, productId;
-        public string submittedBy, fullName;
+        public string submittedBy, fullName, iOId;
         public OrderReceive()
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace WarehouseManagementSystem.UI
                 //do something
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string cb2 = "Update WorkOrder Set WorkOrder.ReceiveStatus='ReceiveDone' where WorkOrder.WorkOrderNo='" + cmbPurchaseOrderNo.Text + "'";
+                string cb2 = "Update WorkOrder Set WorkOrder.ReceiveStatus='ReceiveDone' where WorkOrder.WorkOrderNo='" + cmbImportOrderNo.Text + "'";
                 cmd = new SqlCommand(cb2);
                 cmd.Connection = con;
                 cmd.ExecuteReader();
@@ -46,19 +46,18 @@ namespace WarehouseManagementSystem.UI
             
 
         }
-        private void SaveRSTatus()
+        private void UpdateProductStatus()
         {
             try
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string cb2 = "Update OrderListProduct set ProductStatus='Received' where Sl='" + cmbProductId.Text + "' and ImportOrderNo='"+cmbPurchaseOrderNo.Text+"'";
+                string cb2 = "Update OrderListProduct set ProductStatus='Received' where Sl='" + txtProductId.Text + "' and IOId='" + iOId + "'";
                 cmd = new SqlCommand(cb2);
                 cmd.Connection = con;
                 cmd.ExecuteReader();
                 con.Close();
-               // MessageBox.Show("Successfully Received", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
-               // Reset3();
+              
             }
             catch (Exception ex)
             {
@@ -66,23 +65,55 @@ namespace WarehouseManagementSystem.UI
             }
 
         }
-        private void Reset()
+
+        private void Reset1()
         {
-            cmbPurchaseOrderNo.SelectedIndexChanged -= cmbWorkOrderNo_SelectedIndexChanged;
-            cmbPurchaseOrderNo.Items.Clear();
-            cmbPurchaseOrderNo.SelectedIndex = -1;
-            cmbPurchaseOrderNo.SelectedIndexChanged += cmbWorkOrderNo_SelectedIndexChanged;
-            cmbProductId.SelectedIndexChanged -= cmbProductId_SelectedIndexChanged;
-            cmbProductId.Items.Clear();
-            cmbProductId.SelectedIndex = -1;
-            cmbProductId.SelectedIndexChanged += cmbProductId_SelectedIndexChanged;
+            txtProductId.Clear();
             receiveDate.Text = DateTime.Today.ToString();
-            receiveQuantityTextBox.Clear();
-            receivePriceTextBox.Clear();
+            txtReceiveQuantity.Clear();
+            txtReceiveUnitPrice.Clear();
             txtCOGSUnitPrice.Clear();
         }
+        private void Reset()
+        {
+            Reset1();
+            cmbImportOrderNo.SelectedIndexChanged -= cmbWorkOrderNo_SelectedIndexChanged;
+            cmbImportOrderNo.Items.Clear();
+            cmbImportOrderNo.SelectedIndex = -1;
+            cmbImportOrderNo.SelectedIndexChanged += cmbWorkOrderNo_SelectedIndexChanged;
+           
+        }
+        public void ClearApprovedRequisition()
+        {
 
+            Int32 selectedRowCount = dataGridView1.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            if (selectedRowCount > 0)
+            {
+                for (int i = 0; i < selectedRowCount; i++)
+                {
+
+
+                    dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
+                }
+
+            }
+            dataGridView1.Refresh();
+        }
         private void ManualComplete()
+        {
+
+            UpdateProductStatus();
+            ClearApprovedRequisition();
+            DataChangedByImportOrderNumber();
+            if (dataGridView1.RowCount == 1)
+            {
+                SaveRSTatus();
+                Reset();
+                PopulateImportOrderNo();
+            }
+
+        }
+        private void ManualComplete2()
         {
             DialogResult dialogResult = MessageBox.Show("Is Your Receiving Completed? ", "Confirm", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -101,132 +132,99 @@ namespace WarehouseManagementSystem.UI
             }
             else if (dialogResult == DialogResult.No)
             {
-                cmbProductId.Items.Clear();
-                receiveQuantityTextBox.Clear();
-                receivePriceTextBox.Clear();
+                txtProductId.Clear();
+                txtReceiveQuantity.Clear();
+                txtReceiveUnitPrice.Clear();
                 receiveDate.Value=DateTime.Now;
-                try
-                {
-                    con = new SqlConnection(cs.DBConn);
-
-                    con.Open();
-                    cmd = con.CreateCommand();
-
-                    cmd.CommandText = "SELECT OrderListProduct.Sl from OrderListProduct WHERE ProductStatus !='Received' and  OrderListProduct.ImportOrderNo = '" + cmbPurchaseOrderNo.Text + "'";
-                    rdr = cmd.ExecuteReader();
-
-                    if (rdr.Read())
-                    {
-                        cmbPurchaseOrderNo.Text = rdr.GetInt32(0).ToString().Trim();
-                    }
-                    if ((rdr != null))
-                    {
-                        rdr.Close();
-                    }
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-                    }
-                    cmbPurchaseOrderNo.Text = cmbPurchaseOrderNo.Text.Trim();
-                    cmbProductId.Items.Clear();
-                    cmbProductId.Text = "";
-                    cmbProductId.Enabled = true;
-                    cmbProductId.Focus();
-
-                    con = new SqlConnection(cs.DBConn);
-                    con.Open();
-                    string ct = "select distinct RTRIM(OrderListProduct.Sl) from OrderListProduct  Where OrderListProduct.ProductStatus !='Received' and OrderListProduct.ImportOrderNo= '" + cmbPurchaseOrderNo.Text + "' ";
-                    cmd = new SqlCommand(ct);
-                    cmd.Connection = con;
-                    rdr = cmd.ExecuteReader();
-
-                    while (rdr.Read())
-                    {
-                        cmbProductId.Items.Add(rdr[0]);
-                    }
-                    con.Close();
-
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                return;
+                
             }
+        }
+        private void SaveRSTatus()
+        {
+            try
+            {
+                con = new SqlConnection(cs.DBConn);
+                con.Open();
+                string cb2 = "Update ImportOrder set ReceiveStatus=@d1,ReceivedCompletedByUId=@d2,ReceivedEntryDate=@d3 where ImportOrderNo='" + cmbImportOrderNo.Text + "'";
+                cmd = new SqlCommand(cb2,con);
+                cmd.Parameters.AddWithValue("@d1", "ReceiveComplete");
+                cmd.Parameters.AddWithValue("@d2", submittedBy);
+                cmd.Parameters.AddWithValue("@d3", System.DateTime.UtcNow.ToLocalTime());
+                cmd.ExecuteReader();
+                con.Close();
+                MessageBox.Show("All Requested item is covered", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cmbImportOrderNo.Items.Clear();
+                cmbImportOrderNo.Enabled = true;
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
         private void receiveOrderButton_Click(object sender, EventArgs e)
         {
-            if (cmbProductId.Text == "")
+            if (txtProductId.Text == "")
             {
                 MessageBox.Show("Please select Product Id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                cmbProductId.Focus();
+                txtProductId.Focus();
                 return;
             }
-            if (cmbPurchaseOrderNo.Text == "")
+            if (cmbImportOrderNo.Text == "")
             {
                 MessageBox.Show("Please select PurchaseOrderNo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                cmbPurchaseOrderNo.Focus();
+                cmbImportOrderNo.Focus();
                 return;
             }
 
-            if (receiveQuantityTextBox.Text == "")
+            if (txtReceiveQuantity.Text == "")
             {
                 MessageBox.Show("Please enter receive Amount", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                receiveQuantityTextBox.Focus();
+                txtReceiveQuantity.Focus();
                 return;
             }
-            if (receivePriceTextBox.Text == "")
+            if (txtReceiveUnitPrice.Text == "")
             {
                 MessageBox.Show("Please enter receive price", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                receivePriceTextBox.Focus();
+                txtReceiveUnitPrice.Focus();
                 return;
             }
 
             try
             {
+                
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string cty4 = "select Name from Registration where UserId='" + submittedBy + "'";
-                cmd = new SqlCommand(cty4);
-                cmd.Connection = con;
-                rdr = cmd.ExecuteReader();
-                if (rdr.Read())
-                {
-                    fullName = (rdr.GetString(0));
-                }
-
-
-                con = new SqlConnection(cs.DBConn);
-                con.Open();
-                string cd = "Update OrderListProduct Set ReceiveQuantity=@d3,ReceivePrice=@d4,ReceiveDateTime=@d5,ReceiveBy=@d8 Where ImportOrderNo='" + cmbPurchaseOrderNo.Text + "'and Sl='" + cmbProductId.Text + "'";
+                string cd = "Update OrderListProduct Set ReceiveQuantity=@d1,ReceivePrice=@d2,ProductStatus=@d3 Where IOId='" + iOId + "'and Sl='" + txtProductId.Text + "'";
                 cmd = new SqlCommand(cd);
                 cmd.Connection = con; 
-                cmd.Parameters.AddWithValue("@d3", receiveQuantityTextBox.Text);
-                cmd.Parameters.AddWithValue("@d4", receivePriceTextBox.Text);
-                cmd.Parameters.AddWithValue("@d5", Convert.ToDateTime(receiveDate.Value, System.Globalization.CultureInfo.GetCultureInfo("hi-IN").DateTimeFormat));
-                cmd.Parameters.AddWithValue("@d8", fullName);
+                cmd.Parameters.AddWithValue("@d1", txtReceiveQuantity.Text);
+                cmd.Parameters.AddWithValue("@d2", txtReceiveUnitPrice.Text);              
+                cmd.Parameters.AddWithValue("@d3", "Received");
                 cmd.ExecuteReader();
                 con.Close();
 
               
                     con = new SqlConnection(cs.DBConn);
                     con.Open();
-                    string ct = "insert Into MasterStocks(Sl,ImportOrderNo,MQuantity,CurrentQuantity,UnitPrice,COGSPerUnit) VALUES (@cd1,@cd2,@cd3,@cd3,@cd4,@cd5)" + "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                    string ct = "insert Into MasterStocks(Sl,IOId,MQuantity,CurrentQuantity,UnitPrice,COGSPerUnit) VALUES (@cd1,@cd2,@cd3,@cd3,@cd4,@cd5)" + "SELECT CONVERT(int, SCOPE_IDENTITY())";
                     cmd = new SqlCommand(ct);
                     cmd.Connection = con;
-                    cmd.Parameters.AddWithValue("@cd1", cmbProductId.Text);
-                    cmd.Parameters.AddWithValue("@cd2", cmbPurchaseOrderNo.Text);
-                    cmd.Parameters.AddWithValue("@cd3", receiveQuantityTextBox.Text);
-                    cmd.Parameters.AddWithValue("@cd4", receivePriceTextBox.Text);
+                    cmd.Parameters.AddWithValue("@cd1", txtProductId.Text);
+                    cmd.Parameters.AddWithValue("@cd2", iOId);
+                    cmd.Parameters.AddWithValue("@cd3", txtReceiveQuantity.Text);
+                    cmd.Parameters.AddWithValue("@cd4", txtReceiveUnitPrice.Text);
                     cmd.Parameters.AddWithValue("@cd5", txtCOGSUnitPrice.Text);
                     affectedRows2 = (int) cmd.ExecuteScalar();
                     con.Close();
-                    MessageBox.Show("Successfully Received", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    SaveRSTatus();
-                   ManualComplete();
-                    
-               
+                    MessageBox.Show("Successfully Received", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                    ManualComplete();
+                    Reset1();
+
+
             }
             catch (Exception ex)
             {
@@ -258,7 +256,7 @@ namespace WarehouseManagementSystem.UI
         //    }
         //}
 
-        public void PopulatePurchaseOrderNo()
+        public void PopulateImportOrderNo()
         {
             try
             {
@@ -273,7 +271,7 @@ namespace WarehouseManagementSystem.UI
 
                 while (rdr.Read())
                 {
-                    cmbPurchaseOrderNo.Items.Add(rdr[0]);
+                    cmbImportOrderNo.Items.Add(rdr[0]);
                 }
                 con.Close();
 
@@ -285,25 +283,23 @@ namespace WarehouseManagementSystem.UI
         }
         private void OrderReceive_Load(object sender, EventArgs e)
         {
-            submittedBy = LoginForm.uId2.ToString();
-            //PopulateProductIdCombo();
-            PopulatePurchaseOrderNo();
-            cmbPurchaseOrderNo.Focus();
+            submittedBy = LoginForm.uId2.ToString();           
+            PopulateImportOrderNo();
+            cmbImportOrderNo.Focus();
         }
         private void DataChangedByImportOrderNumber()
         {
             try
             {
                 con = new SqlConnection(cs.DBConn);
-                con.Open();
-                String sql = "SELECT RTRIM(FeederStockDetails.FeederName),RTRIM(MasterStocks.ImportOrderNo),RTRIM(Requisition.RequisitionNo),RTRIM(MasterStocks.MStockId),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(RequisitionList.Quantity),RTRIM(RequisitionList.RId)  FROM Requisition INNER JOIN FeederStockDetails ON Requisition.FeederId = FeederStockDetails.FeederId INNER JOIN Requisition AS Requisition_1 ON Requisition.ReqId = Requisition_1.ReqId INNER JOIN RequisitionList ON Requisition.ReqId = RequisitionList.ReqId AND Requisition_1.ReqId = RequisitionList.ReqId INNER JOIN  MasterStocks ON RequisitionList.MStockId = MasterStocks.MStockId INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl where Requisition.RequisitionNo='" + cmbRequisitionNo.Text + "' and RequisitionList.Statuss is Null order by MasterStocks.MStockId asc";
-                //string sql =" SELECT RTRIM(MasterStocks.ImportOrderNo),RTRIM(Requisition.RequisitionNo),RTRIM(MasterStocks.MStockId),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(RequisitionList.Quantity) FROM ((Requisition INNER JOIN RequisitionList on Requisition.ReqId=RequisitionList.ReqId) INNER JOIN MasterStocks ON MasterStocks.MStockId = RequisitionList.MStockId) INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl where Requisition.RequisitionNo='"+cmbRequisitionNo.Text+"' order by MasterStocks.MStockId asc";
+                con.Open();              
+                string sql = "SELECT ImportOrder.ImportOrderNo,pp.Sl,pp.ProductGenericDescription,pp.ItemCode FROM   OrderListProduct INNER JOIN  ProductListSummary AS pp ON OrderListProduct.Sl = pp.Sl INNER JOIN ImportOrder ON OrderListProduct.IOId = ImportOrder.IOId Where OrderListProduct.ProductStatus !='Received' and OrderListProduct.IOId ='"+iOId+"'";
                 cmd = new SqlCommand(sql, con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();
                 while (rdr.Read() == true)
                 {
-                    dataGridView1.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4], rdr[5], rdr[6], rdr[7]);
+                    dataGridView1.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3]);
                 }
                 con.Close();
 
@@ -314,56 +310,37 @@ namespace WarehouseManagementSystem.UI
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void cmbWorkOrderNo_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void GetIOIdByImportOrderNo()
         {
-            cmbProductId.Focus();
             try
             {
-                con = new SqlConnection(cs.DBConn);
-
-                con.Open();
-                cmd = con.CreateCommand();
-
-                cmd.CommandText = "SELECT OrderListProduct.Sl from OrderListProduct WHERE ProductStatus !='Received' and  OrderListProduct.ImportOrderNo = '" + cmbPurchaseOrderNo.Text + "'";
-                rdr = cmd.ExecuteReader();
-
-                if (rdr.Read())
-                {
-                    cmbPurchaseOrderNo.Text = rdr.GetInt32(0).ToString().Trim();
-                }
-                if ((rdr != null))
-                {
-                    rdr.Close();
-                }
-                if (con.State == ConnectionState.Open)
-                {
-                    con.Close();
-                }
-                cmbPurchaseOrderNo.Text = cmbPurchaseOrderNo.Text.Trim();
-                cmbProductId.Items.Clear();
-                cmbProductId.Text = "";
-                cmbProductId.Enabled = true;
-                cmbProductId.Focus();
 
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string ct = "select distinct RTRIM(OrderListProduct.Sl) from OrderListProduct  Where OrderListProduct.ProductStatus !='Received' and OrderListProduct.ImportOrderNo= '" + cmbPurchaseOrderNo.Text + "' ";
+                string ct = "select RTRIM(ImportOrder.IOId) from ImportOrder Where ImportOrder.ImportOrderNo ='"+cmbImportOrderNo.Text+"'";
                 cmd = new SqlCommand(ct);
                 cmd.Connection = con;
                 rdr = cmd.ExecuteReader();
 
-                while (rdr.Read())
+                if (rdr.Read())
                 {
-                    cmbProductId.Items.Add(rdr[0]);
+                    iOId = (rdr.GetString(0));
                 }
                 con.Close();
 
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        
+        }
+        private void cmbWorkOrderNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetIOIdByImportOrderNo();
+            DataChangedByImportOrderNumber();
+
         }
 
         private void cmbProductId_SelectedIndexChanged(object sender, EventArgs e)
@@ -378,13 +355,13 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string cb2 = "Update ImportOrder set ReceiveStatus='ReceiveComplete' where ImportOrderNo='" + cmbPurchaseOrderNo.Text + "'";
+                string cb2 = "Update ImportOrder set ReceiveStatus='ReceiveComplete' where ImportOrderNo='" + cmbImportOrderNo.Text + "'";
                 cmd = new SqlCommand(cb2);
                 cmd.Connection = con;
                 cmd.ExecuteReader();
                 con.Close();
                 MessageBox.Show("Successfully Done", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //Reset3();
+               
             }
             catch (Exception ex)
             {
@@ -404,7 +381,7 @@ namespace WarehouseManagementSystem.UI
             {
                 e.Handled = true;
             }
-            if (e.KeyChar == '.' && receivePriceTextBox.Text.Contains("."))
+            if (e.KeyChar == '.' && txtReceiveUnitPrice.Text.Contains("."))
             {
                 e.Handled = true;
             }
@@ -434,14 +411,14 @@ namespace WarehouseManagementSystem.UI
 
         private void receiveDate_ValueChanged(object sender, EventArgs e)
         {
-            receiveQuantityTextBox.Focus();
+            txtReceiveQuantity.Focus();
         }
 
         private void receiveQuantityTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                receivePriceTextBox.Focus();
+                txtReceiveUnitPrice.Focus();
                 e.Handled = true;
             }
         }
@@ -465,6 +442,23 @@ namespace WarehouseManagementSystem.UI
             if (e.KeyChar == '.' && txtCOGSUnitPrice.Text.Contains("."))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                //cmbWorkOrderNo.Enabled = false;
+                DataGridViewRow dr = dataGridView1.CurrentRow;
+                txtProductId.Text = dr.Cells[1].Value.ToString();
+               
+                g.Text = k.Text;
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

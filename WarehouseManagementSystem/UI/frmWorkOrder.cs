@@ -23,33 +23,38 @@ namespace WarehouseManagementSystem.UI
         ConnectionString cs = new ConnectionString();
         SqlDataReader rdr;
         public string submittedBy, fullName;
+        public int iOId;
         public frmWorkOrder()
         {
             InitializeComponent();
         }
 
-        private void ManualComplete()
+       
+        private void SaveSTatus()
         {
-            DialogResult dialogResult = MessageBox.Show("Are you Surely want To Complete or Done this Order ", "Confirm", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            try
             {
-                //do something
-                try
-                {
-                    SaveSTatus();
+                con = new SqlConnection(cs.DBConn);
+                con.Open();
+                string cb2 = "Update ImportOrder set ImportOrder.OrderByUId=@d1, OrderStatus=@d2,OrderEntryDate=@d3 where  ImportOrder.IOId='" + iOId + "' ";
+                cmd = new SqlCommand(cb2,con);
+                cmd.Parameters.AddWithValue("@d1", submittedBy);
+                cmd.Parameters.AddWithValue("@d2", "OrderComplete");
+                cmd.Parameters.AddWithValue("@d3", System.DateTime.UtcNow.ToLocalTime());
+                cmd.ExecuteReader();
+                con.Close();               
+                cmbWorkOrderNo.SelectedIndex = -1;
+                FillWOrderCombo();
 
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
-            //else if (dialogResult == DialogResult.No)
-            //{
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            //}
         }
+
+        
         private void submitButton_Click(object sender, EventArgs e)
         {
             if (listView1.Items.Count == 0)
@@ -62,44 +67,25 @@ namespace WarehouseManagementSystem.UI
 
             try
             {
-
-                con = new SqlConnection(cs.DBConn);
-                con.Open();
-                string cty4 = "select Name from Registration where UserId='" + submittedBy + "'";
-                cmd = new SqlCommand(cty4);
-                cmd.Connection = con;
-                rdr = cmd.ExecuteReader();
-                if (rdr.Read())
-                {
-                    fullName = (rdr.GetString(0));
-                }
-
                 for (int i = 0; i <= listView1.Items.Count - 1; i++)
                 {
                     con = new SqlConnection(cs.DBConn);
-
-                    string cd = "insert Into OrderListProduct(ImportOrderNo,Sl,ItemCode,OrderAmount,OrderPrice,OrderBy,ProductStatus) VALUES (@d1,@d3,@d4,@d5,@d6,@d7,@d8)";
-                    cmd = new SqlCommand(cd);
-                    cmd.Connection = con;
-                    cmd.Parameters.AddWithValue("d1", cmbWorkOrderNo.Text);
-                   // cmd.Parameters.AddWithValue("d2", System.DateTime.UtcNow.ToLocalTime());
-                    cmd.Parameters.AddWithValue("d3", listView1.Items[i].SubItems[1].Text);
-                    cmd.Parameters.AddWithValue("d4", listView1.Items[i].SubItems[2].Text);
-                    cmd.Parameters.AddWithValue("d5", listView1.Items[i].SubItems[3].Text);
-                    cmd.Parameters.AddWithValue("d6", listView1.Items[i].SubItems[4].Text);
-                    cmd.Parameters.AddWithValue("d7", fullName);
-                    cmd.Parameters.AddWithValue("d8", "NotReceived");
+                    string cd = "insert Into OrderListProduct(IOId,Sl,OrderAmount,OrderPrice,ProductStatus) VALUES (@d1,@d2,@d3,@d4,@d5)";
+                    cmd = new SqlCommand(cd,con);                   
+                    cmd.Parameters.AddWithValue("d1", iOId);                  
+                    cmd.Parameters.AddWithValue("d2", listView1.Items[i].SubItems[1].Text);                    
+                    cmd.Parameters.AddWithValue("d3", listView1.Items[i].SubItems[3].Text);
+                    cmd.Parameters.AddWithValue("d4", listView1.Items[i].SubItems[4].Text);                    
+                    cmd.Parameters.AddWithValue("d5", "NotReceived");
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();
+                   
                 }
-
+                SaveSTatus();
                 MessageBox.Show("Successfully Submitted.", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 listView1.Items.Clear();
-                dataGridViewk.Enabled = false;
-                ManualComplete();
-               
-
+                dataGridViewk.Enabled = false;               
             }
             catch (Exception ex)
             {
@@ -243,17 +229,14 @@ namespace WarehouseManagementSystem.UI
 
             try
             {
-             
                 if (listView1.Items.Count == 0)
                 {
-                    ListViewItem lst = new ListViewItem();
-                    //lst.SubItems.Add(cmbWorkOrderNo.Text);
+                    ListViewItem lst = new ListViewItem();                   
                     lst.SubItems.Add(txtProductId.Text);
                     lst.SubItems.Add(txtItemCode.Text);
                     lst.SubItems.Add(txtOrderAmount.Text);
                     lst.SubItems.Add(txtOrderPrice.Text);
-                    listView1.Items.Add(lst);
-                    //cmbWorkOrderNo.SelectedIndex = -1;
+                    listView1.Items.Add(lst);                   
                     txtProductId.Text = "";
                     txtItemCode.Text = "";
                     txtOrderAmount.Text = "";
@@ -261,21 +244,31 @@ namespace WarehouseManagementSystem.UI
                     return;
                 }
 
-                ListViewItem lst1 = new ListViewItem();
-               
-                //lst1.SubItems.Add(cmbWorkOrderNo.Text);
-                lst1.SubItems.Add(txtProductId.Text);
-                lst1.SubItems.Add(txtItemCode.Text);
-                lst1.SubItems.Add(txtOrderAmount.Text);
-                lst1.SubItems.Add(txtOrderPrice.Text);
-                listView1.Items.Add(lst1);
-                //cmbWorkOrderNo.SelectedIndex = -1;
-                txtProductId.Text = "";
-                txtItemCode.Text = "";
-                txtOrderAmount.Text = "";
-                txtOrderPrice.Text = "";
-                return;
+
+               // string txt = txtProductId.Text;
+                ListViewItem item = listView1.FindItemWithText(txtProductId.Text);
+                if (!listView1.Items.Contains(item))
+                {
+                    ListViewItem lst1 = new ListViewItem();                   
+                    lst1.SubItems.Add(txtProductId.Text);
+                    lst1.SubItems.Add(txtItemCode.Text);
+                    lst1.SubItems.Add(txtOrderAmount.Text);
+                    lst1.SubItems.Add(txtOrderPrice.Text);
+                    listView1.Items.Add(lst1);                   
+                    txtProductId.Text = "";
+                    txtItemCode.Text = "";
+                    txtOrderAmount.Text = "";
+                    txtOrderPrice.Text = "";
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("You Can Not Add Same Item More than one times", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   return;
+             
+                }
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -303,28 +296,7 @@ namespace WarehouseManagementSystem.UI
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void SaveSTatus()
-        {
-            try
-            {
-                con = new SqlConnection(cs.DBConn);
-                con.Open();
-                string cb2 = "Update ImportOrder set OrderStatus='OrderComplete' where ImportOrderNo='" + cmbWorkOrderNo.Text + "'";
-                cmd = new SqlCommand(cb2);
-                cmd.Connection = con;
-                cmd.ExecuteReader();
-                con.Close();
-                MessageBox.Show("Succesfully Done", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                cmbWorkOrderNo.SelectedIndex = -1;
-                FillWOrderCombo();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
+        
             
         
         private void button2_Click(object sender, EventArgs e)
@@ -452,6 +424,23 @@ namespace WarehouseManagementSystem.UI
         {
             txtProductId.Focus();
             groupBox2.Enabled = true;
+            try
+            {
+                con = new SqlConnection(cs.DBConn);
+                con.Open();
+                string cty4 = "select ImportOrder.IOId from ImportOrder where  ImportOrder.ImportOrderNo='" + cmbWorkOrderNo.Text + "'";
+                cmd = new SqlCommand(cty4);
+                cmd.Connection = con;
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    iOId = (rdr.GetInt32(0));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void txtProductId_KeyDown(object sender, KeyEventArgs e)

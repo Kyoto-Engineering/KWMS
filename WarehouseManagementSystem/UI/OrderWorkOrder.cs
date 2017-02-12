@@ -26,13 +26,13 @@ namespace WarehouseManagementSystem.UI
         }
         private void Reset3()
         {
-            txtImportOrderNo.Text = "";
-            importOrderDate.Text = "";
-            lcNumberTextBox.Text = "";
-            lcDate.Text = "";
-            invoiceNumberTextBox.Text = "";
-            invoiceDate.Text = "";
-            packingListNoTextBox.Text = "";
+            txtImportOrderNo.Clear();
+            importOrderDate.Value = System.DateTime.Today;
+            lcNumberTextBox.Clear();
+            lcDate.Value = System.DateTime.Today;
+            invoiceNumberTextBox.Clear();
+            invoiceDate.Value = System.DateTime.Today;
+            packingListNoTextBox.Clear();
 
         }
         private void button1_Click(object sender, EventArgs e)
