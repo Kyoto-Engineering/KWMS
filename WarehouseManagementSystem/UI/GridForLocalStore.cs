@@ -28,7 +28,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                cmd = new SqlCommand("SELECT RTRIM(MasterStocks.Sl),RTRIM(MasterStocks.ImportOrderNo),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(MasterStocks.MQuantity),RTRIM(MasterStocks.UnitPrice) from MasterStocks,ProductListSummary where MasterStocks.Sl=ProductListSummary.Sl and (MasterStocks.MQuantity >0 and MasterStocks.MQuantity !=0) order by MasterStocks.Sl", con);
+                cmd = new SqlCommand("SELECT  ProductListSummary.Sl, ImportOrder.ImportOrderNo, ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode, MasterStocks.MQuantity, MasterStocks.UnitPrice FROM  MasterStocks  INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl  INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId where MasterStocks.MQuantity >0 and MasterStocks.MQuantity !=0  order by MasterStocks.Sl desc", con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();
                 while (rdr.Read() == true)

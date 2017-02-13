@@ -225,6 +225,7 @@
             this.txtImportOrderNo.ReadOnly = true;
             this.txtImportOrderNo.Size = new System.Drawing.Size(222, 29);
             this.txtImportOrderNo.TabIndex = 0;
+            this.txtImportOrderNo.TextChanged += new System.EventHandler(this.txtImportOrderNo_TextChanged);
             this.txtImportOrderNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtImportOrderNo_KeyDown);
             // 
             // label5

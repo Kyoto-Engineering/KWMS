@@ -22,7 +22,7 @@ namespace WarehouseManagementSystem.UI
         ConnectionString cs=new ConnectionString();
         public string submittedBy, fullName, feederId, rId;
         public decimal ReqNO,mQuantity,mUpdateQuantity;
-        public int requisitionListId;
+        public int requisitionListId, iOId;
 
         public RequisitionApproval()
         {
@@ -198,7 +198,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string ctr = "select CurrentQuantity from MasterStocks where ImportOrderNo='" + txtImportOrderNo.Text + "' and Sl='" + txtMasterStockProductId.Text + "'";
+                string ctr = "select CurrentQuantity from MasterStocks where IOId='" + iOId+ "' and Sl='" + txtMasterStockProductId.Text + "'";
                 cmd = new SqlCommand(ctr);
                 cmd.Connection = con;
                 rdr = cmd.ExecuteReader();
@@ -234,7 +234,7 @@ namespace WarehouseManagementSystem.UI
                 mUpdateQuantity = mQuantity -decimal.Parse(txtReceiveAmount.Text);
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string cdu = "Update MasterStocks Set CurrentQuantity=" + mUpdateQuantity + "  Where ImportOrderNo='" + txtImportOrderNo.Text + "' and Sl='" + txtMasterStockProductId.Text + "'";
+                string cdu = "Update MasterStocks Set CurrentQuantity=" + mUpdateQuantity + "  Where IOId='" + iOId + "' and Sl='" + txtMasterStockProductId.Text + "'";
                 cmd = new SqlCommand(cdu);
                 cmd.Connection = con;
                 cmd.ExecuteReader();
@@ -310,7 +310,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                String sql = "SELECT RTRIM(FeederStockDetails.FeederName),RTRIM(MasterStocks.ImportOrderNo),RTRIM(Requisition.RequisitionNo),RTRIM(MasterStocks.MStockId),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(RequisitionList.Quantity),RTRIM(RequisitionList.RId)  FROM Requisition INNER JOIN FeederStockDetails ON Requisition.FeederId = FeederStockDetails.FeederId INNER JOIN Requisition AS Requisition_1 ON Requisition.ReqId = Requisition_1.ReqId INNER JOIN RequisitionList ON Requisition.ReqId = RequisitionList.ReqId AND Requisition_1.ReqId = RequisitionList.ReqId INNER JOIN  MasterStocks ON RequisitionList.MStockId = MasterStocks.MStockId INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl where Requisition.RequisitionNo='" + cmbRequisitionNo.Text + "' and RequisitionList.Statuss is Null order by MasterStocks.MStockId asc";
+                String sql = "SELECT FeederStockDetails.FeederName, ImportOrder.ImportOrderNo, Requisition.RequisitionNo, MasterStocks.MStockId,ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode,RequisitionList.Quantity, RequisitionList.RId FROM  Requisition  INNER JOIN RequisitionList ON Requisition.ReqId = RequisitionList.ReqId INNER JOIN MasterStocks ON RequisitionList.MStockId = MasterStocks.MStockId INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl  INNER JOIN FeederStockDetails ON Requisition.FeederId = FeederStockDetails.FeederId INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId  where Requisition.RequisitionNo='"+cmbRequisitionNo.Text+"' and RequisitionList.Statuss is Null order by MasterStocks.MStockId asc";
                 //string sql =" SELECT RTRIM(MasterStocks.ImportOrderNo),RTRIM(Requisition.RequisitionNo),RTRIM(MasterStocks.MStockId),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(RequisitionList.Quantity) FROM ((Requisition INNER JOIN RequisitionList on Requisition.ReqId=RequisitionList.ReqId) INNER JOIN MasterStocks ON MasterStocks.MStockId = RequisitionList.MStockId) INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl where Requisition.RequisitionNo='"+cmbRequisitionNo.Text+"' order by MasterStocks.MStockId asc";
                 cmd = new SqlCommand(sql, con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
@@ -516,6 +516,28 @@ namespace WarehouseManagementSystem.UI
             ClearApprovedRequisition();
             MessageBox.Show("Denied Successfully.", "Record", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Reset1();
+        }
+
+        private void txtImportOrderNo_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                con = new SqlConnection(cs.DBConn);
+                con.Open();
+                string ctr = "select IOId from ImportOrder where ImportOrderNo='" + txtImportOrderNo.Text + "' ";
+                cmd = new SqlCommand(ctr);
+                cmd.Connection = con;
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                {
+                    iOId = (rdr.GetInt32(0));
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

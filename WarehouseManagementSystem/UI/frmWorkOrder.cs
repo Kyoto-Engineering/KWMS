@@ -243,30 +243,31 @@ namespace WarehouseManagementSystem.UI
                     txtOrderPrice.Text = "";
                     return;
                 }
+                  String csVal = txtProductId.Text;
 
-
-               // string txt = txtProductId.Text;
-                ListViewItem item = listView1.FindItemWithText(txtProductId.Text);
-                if (!listView1.Items.Contains(item))
-                {
-                    ListViewItem lst1 = new ListViewItem();                   
+                if (listView1.FindItemWithText(csVal) == null)
+                    {
+                    ListViewItem lst1 = new ListViewItem();
                     lst1.SubItems.Add(txtProductId.Text);
                     lst1.SubItems.Add(txtItemCode.Text);
                     lst1.SubItems.Add(txtOrderAmount.Text);
                     lst1.SubItems.Add(txtOrderPrice.Text);
-                    listView1.Items.Add(lst1);                   
+                    listView1.Items.Add(lst1);
                     txtProductId.Text = "";
                     txtItemCode.Text = "";
                     txtOrderAmount.Text = "";
                     txtOrderPrice.Text = "";
                     return;
-                }
-                else
-                {
-                    MessageBox.Show("You Can Not Add Same Item More than one times", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                   return;
-             
-                }
+                    }
+                  else
+                   {
+                   MessageBox.Show("You Can Not Add Same Item More than one times", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                  return;
+
+                   }
+
+
+              
             }
 
             catch (Exception ex)

@@ -62,7 +62,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                cmd = new SqlCommand("SELECT RTRIM(MasterStocks.MStockId),RTRIM(MasterStocks.ImportOrderNo),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(MasterStocks.CurrentQuantity),RTRIM(MasterStocks.UnitPrice)  from MasterStocks,ProductListSummary  where MasterStocks.Sl=ProductListSummary.Sl and (MasterStocks.CurrentQuantity >0 and MasterStocks.CurrentQuantity !=0) order by MasterStocks.MStockId desc", con);
+                cmd = new SqlCommand("SELECT MasterStocks.MStockId,ImportOrder.ImportOrderNo,ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode,MasterStocks.MQuantity, MasterStocks.UnitPrice FROM  ProductListSummary  INNER JOIN  MasterStocks ON ProductListSummary.Sl = MasterStocks.Sl  INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId where (MasterStocks.CurrentQuantity >0 and MasterStocks.CurrentQuantity !=0) order by MasterStocks.MStockId desc", con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();
                 while (rdr.Read() == true)
@@ -254,11 +254,7 @@ namespace WarehouseManagementSystem.UI
                     MessageBox.Show("You can not Add one Item more  than one time", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                
-
             }
-
-           
             try
             {
 
@@ -278,18 +274,31 @@ namespace WarehouseManagementSystem.UI
                     return;
 
                 }
-                ListViewItem lst1 = new ListViewItem();
-                lst1.SubItems.Add(txtImportOrderNo.Text);
-                lst1.SubItems.Add(txtProductId.Text);
-                lst1.SubItems.Add(txtQuantity.Text);
-                lst1.SubItems.Add(txtRequestedQuantity.Text);
-                listView1.Items.Add(lst1);
-                txtImportOrderNo.Text = "";
-                txtProductId.Text = "";
-                txtQuantity.Text = "";
-                txtRequestedQuantity.Text = "";
-                cmbFeederStock.Enabled = false;
-                return;
+
+                String csVal = txtProductId.Text;
+
+                if (listView1.FindItemWithText(csVal) == null)
+                {
+                    ListViewItem lst1 = new ListViewItem();
+                    lst1.SubItems.Add(txtImportOrderNo.Text);
+                    lst1.SubItems.Add(txtProductId.Text);
+                    lst1.SubItems.Add(txtQuantity.Text);
+                    lst1.SubItems.Add(txtRequestedQuantity.Text);
+                    listView1.Items.Add(lst1);
+                    txtImportOrderNo.Text = "";
+                    txtProductId.Text = "";
+                    txtQuantity.Text = "";
+                    txtRequestedQuantity.Text = "";
+                    cmbFeederStock.Enabled = false;
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("You Can Not Add Same Item More than one times", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
+                }
+                
 
             }
             catch (Exception ex)
