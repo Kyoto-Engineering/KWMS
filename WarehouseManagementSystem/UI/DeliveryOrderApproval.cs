@@ -38,11 +38,11 @@ namespace WarehouseManagementSystem.UI
 
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string ct = "select RTRIM(FeederStockDetails.FeederName) from FeederStockDetails  order by FeederStockDetails.FeederId desc ";
-                cmd = new SqlCommand(ct);
-                cmd.Connection = con;
+               // string ct ="SELECT  FeederStockDetails.FeederName FROM  FeederStock INNER JOIN FeederStockDetails ON FeederStock.FeederId = FeederStockDetails.FeederId  INNER JOIN DeliveryLog ON FeederStockDetails.FeederId = DeliveryLog.FeederId INNER JOIN DeleveryOrder ON DeliveryLog.DOiD = DeleveryOrder.DOiD where DeleveryOrder.DOiD='"+deliveryOrderCombo.Text+"'";
+                string ct = "SELECT FeederStockDetails.FeederName FROM  DeliveryLog INNER JOIN FeederStockDetails ON DeliveryLog.FeederId = FeederStockDetails.FeederId INNER JOIN DeleveryOrder ON DeliveryLog.DOiD = DeleveryOrder.DOiD  where  DeleveryOrder.DOiD='"+deliveryOrderCombo.Text+"' ";
+                //string ct ="SELECT FeederStockDetails.FeederName FROM  DeliveryLog INNER JOIN FeederStockDetails ON DeliveryLog.FeederId = FeederStockDetails.FeederId INNER JOIN DeleveryOrder ON DeliveryLog.DOiD = DeleveryOrder.DOiD";
+                cmd = new SqlCommand(ct,con);               
                 rdr = cmd.ExecuteReader();
-
                 while (rdr.Read())
                 {
                     feederStockCombo.Items.Add(rdr[0]);
@@ -85,7 +85,7 @@ namespace WarehouseManagementSystem.UI
         {
             userId = LoginForm.uId2.ToString();
             GetDeliveryOrderId();
-            GetFeederNameCombo();
+            //GetFeederNameCombo();
         }
 
         private void GetFeederStock()
@@ -153,7 +153,7 @@ namespace WarehouseManagementSystem.UI
                     dataGridView2.Rows.Add(rdr[0], rdr[1], rdr[2]);
                 }
                 con.Close();
-
+                GetFeederNameCombo();
 
             }
             catch (Exception ex)
@@ -165,6 +165,7 @@ namespace WarehouseManagementSystem.UI
         {
            
             GetDeliveryOrder();
+
         }
         private void SaveDeliveryLog()
         {
