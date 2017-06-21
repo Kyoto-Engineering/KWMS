@@ -28,7 +28,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                cmd = new SqlCommand("SELECT  ProductListSummary.Sl, ImportOrder.ImportOrderNo, ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode, MasterStocks.MQuantity, MasterStocks.UnitPrice FROM  MasterStocks  INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl  INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId where MasterStocks.MQuantity >0 and MasterStocks.MQuantity !=0  order by MasterStocks.Sl desc", con);
+                cmd = new SqlCommand("SELECT  ProductListSummary.Sl, ImportOrder.ImportOrderNo, ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode, MasterStocks.CurrentQuantity, MasterStocks.UnitPrice FROM  MasterStocks  INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl  INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId where MasterStocks.CurrentQuantity >0 and MasterStocks.CurrentQuantity !=0  order by MasterStocks.Sl desc", con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();
                 while (rdr.Read() == true)
@@ -99,7 +99,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                String sql = "SELECT RTRIM(MasterStocks.Sl),RTRIM(MasterStocks.ImportOrderNo),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(MasterStocks.MQuantity),RTRIM(MasterStocks.UnitPrice) from MasterStocks,ProductListSummary where MasterStocks.Sl=ProductListSummary.Sl and MasterStocks.Sl like '" + txt1ProductId.Text + "%'order by MasterStocks.Sl desc";
+                String sql = "SELECT  ProductListSummary.Sl, ImportOrder.ImportOrderNo, ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode, MasterStocks.CurrentQuantity, MasterStocks.UnitPrice FROM  MasterStocks  INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl  INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId where MasterStocks.CurrentQuantity >0 and MasterStocks.CurrentQuantity !=0  and MasterStocks.Sl like '" + txt1ProductId.Text + "%'order by MasterStocks.Sl desc";
                 cmd = new SqlCommand(sql, con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();
@@ -121,7 +121,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                String sql = "SELECT RTRIM(MasterStocks.Sl),RTRIM(MasterStocks.ImportOrderNo),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(MasterStocks.MQuantity),RTRIM(MasterStocks.UnitPrice) from MasterStocks,ProductListSummary where MasterStocks.Sl=ProductListSummary.Sl and ProductListSummary.ProductGenericDescription like '" + txtProductName.Text + "%'order by MasterStocks.Sl desc";
+                String sql = "SELECT  ProductListSummary.Sl, ImportOrder.ImportOrderNo, ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode, MasterStocks.CurrentQuantity, MasterStocks.UnitPrice FROM  MasterStocks  INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl  INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId where MasterStocks.CurrentQuantity >0 and MasterStocks.CurrentQuantity !=0 and ProductListSummary.ProductGenericDescription like '" + txtProductName.Text + "%'order by MasterStocks.Sl desc";
                 cmd = new SqlCommand(sql, con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();
@@ -143,7 +143,7 @@ namespace WarehouseManagementSystem.UI
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                String sql = "SELECT RTRIM(MasterStocks.Sl),RTRIM(MasterStocks.ImportOrderNo),RTRIM(ProductListSummary.ProductGenericDescription),RTRIM(ProductListSummary.ItemCode),RTRIM(MasterStocks.MQuantity),RTRIM(MasterStocks.UnitPrice) from MasterStocks,ProductListSummary where MasterStocks.Sl=ProductListSummary.Sl and ProductListSummary.ItemCode like '" + txtItemCode.Text + "%'order by MasterStocks.Sl desc";
+                String sql = "SELECT  ProductListSummary.Sl, ImportOrder.ImportOrderNo, ProductListSummary.ProductGenericDescription,ProductListSummary.ItemCode, MasterStocks.CurrentQuantity, MasterStocks.UnitPrice FROM  MasterStocks  INNER JOIN ProductListSummary ON MasterStocks.Sl = ProductListSummary.Sl  INNER JOIN ImportOrder ON MasterStocks.IOId = ImportOrder.IOId where MasterStocks.CurrentQuantity >0 and MasterStocks.CurrentQuantity !=0  and ProductListSummary.ItemCode like '" + txtItemCode.Text + "%'order by MasterStocks.Sl desc";
                 cmd = new SqlCommand(sql, con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();

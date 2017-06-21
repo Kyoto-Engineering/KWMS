@@ -117,5 +117,13 @@ namespace WarehouseManagementSystem.UI
             frm.ShowDialog();
             this.Visible = true;  
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DeliveryProduct  f2=new DeliveryProduct();
+            this.Visible = false;
+            f2.ShowDialog();
+            this.Visible = true;
+        }
     }
 }

@@ -143,6 +143,12 @@
     <Compile Include="UI\DeliveryOrderUI.Designer.cs">
       <DependentUpon>DeliveryOrderUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\DeliveryProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DeliveryProduct.designer.cs">
+      <DependentUpon>DeliveryProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frmMainUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DeliveryOrderUI.resx">
       <DependentUpon>DeliveryOrderUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DeliveryProduct.resx">
+      <DependentUpon>DeliveryProduct.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmMainUI.resx">
       <DependentUpon>frmMainUI.cs</DependentUpon>

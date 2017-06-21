@@ -44,6 +44,7 @@
             this.requisitionApproval = new System.Windows.Forms.Button();
             this.setPriceButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.toolStripContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +67,7 @@
             this.lcButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.lcButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lcButton.ForeColor = System.Drawing.Color.Blue;
-            this.lcButton.Location = new System.Drawing.Point(17, 76);
+            this.lcButton.Location = new System.Drawing.Point(155, 15);
             this.lcButton.Name = "lcButton";
             this.lcButton.Size = new System.Drawing.Size(132, 60);
             this.lcButton.TabIndex = 1;
@@ -146,6 +147,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.deliveryOrderButton);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.localStoreRoomButton);
@@ -157,7 +159,7 @@
             this.groupBox1.Controls.Add(this.registerButton);
             this.groupBox1.Location = new System.Drawing.Point(36, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(166, 646);
+            this.groupBox1.Size = new System.Drawing.Size(410, 646);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             // 
@@ -235,6 +237,19 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.Blue;
+            this.button3.Location = new System.Drawing.Point(156, 81);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(132, 58);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Delivery Order";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // frmMainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,5 +295,6 @@
         private System.Windows.Forms.Button localStoreRoomButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button deliveryOrderButton;
+        private System.Windows.Forms.Button button3;
     }
 }
