@@ -41,14 +41,14 @@ namespace WarehouseManagementSystem.UI
                 quotationId = splitter[4];
                 con = new SqlConnection(Cs.DBConn);
                 string qry =
-                    "SELECT        DeliveryProduct.DeliveryProductId, ProductListSummary.ProductGenericDescription, ProductListSummary.ItemCode, ProductListSummary.ItemDescription, DeliveryProduct.DPQty, DeliveryProduct.BacklogQty, MasterStocks.MQuantity ProductListSummary.Sl FROM Delivery INNER JOIN DeliveryProduct ON Delivery.DeliveryId = DeliveryProduct.DeliveryId INNER JOIN ProductQuotation ON DeliveryProduct.PQId = ProductQuotation.PQId INNER JOIN ProductListSummary ON ProductQuotation.Sl = ProductListSummary.Sl INNER JOIN MasterStocks ON ProductListSummary.Sl = MasterStocks.Sl WHERE (Delivery.RefNo ='" + SupplierComboBox.Text + "' ) AND (MasterStocks.MQuantity > 0) AND (DeliveryProduct.BacklogQty > 0)";
+                    "SELECT        DeliveryProduct.DeliveryProductId, ProductListSummary.ProductGenericDescription, ProductListSummary.ItemCode, ProductListSummary.ItemDescription, DeliveryProduct.DPQty, DeliveryProduct.BacklogQty, MasterStocks.MQuantity, ProductListSummary.Sl FROM Delivery INNER JOIN DeliveryProduct ON Delivery.DeliveryId = DeliveryProduct.DeliveryId INNER JOIN ProductQuotation ON DeliveryProduct.PQId = ProductQuotation.PQId INNER JOIN ProductListSummary ON ProductQuotation.Sl = ProductListSummary.Sl INNER JOIN MasterStocks ON ProductListSummary.Sl = MasterStocks.Sl WHERE (Delivery.RefNo ='" + SupplierComboBox.Text + "' ) AND (MasterStocks.MQuantity > 0) AND (DeliveryProduct.BacklogQty > 0)";
                 cmd = new SqlCommand(qry, con);
                 dataGridView1.Rows.Clear();
                 con.Open();
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    dataGridView1.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4], rdr[5], rdr[6],rdr[7],rdr[8]);
+                    dataGridView1.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4], rdr[5], rdr[6],rdr[7]);
                 }
                 con.Close();
                
