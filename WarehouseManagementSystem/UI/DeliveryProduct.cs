@@ -139,7 +139,7 @@ namespace WarehouseManagementSystem.UI
                     }
                     else
                     {
-                        if (listView1.FindItemWithText(impOd) == null)
+                        if (GetValue())
                         {
                             ListViewItem l2 = new ListViewItem();
                             l2.Text = impOd;
@@ -164,6 +164,19 @@ namespace WarehouseManagementSystem.UI
             
            
            
+        }
+        private bool GetValue()
+        {
+            bool x = true;
+            foreach (ListViewItem z in listView1.Items)
+            {
+                if (z.Text == impOd)
+                {
+                    x = false;
+                    break;
+                }
+            }
+            return x;
         }
 
      private void ClearselectedProduct()
