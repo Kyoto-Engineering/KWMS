@@ -41,7 +41,7 @@ namespace WarehouseManagementSystem.UI
                 quotationId = splitter[4];
                 con = new SqlConnection(Cs.DBConn);
                 string qry =
-                    "SELECT        DeliveryProduct.DeliveryProductId, ProductListSummary.ProductGenericDescription, ProductListSummary.ItemCode, ProductListSummary.ItemDescription, DeliveryProduct.DPQty, DeliveryProduct.BacklogQty, MasterStocks.MQuantity, ProductListSummary.Sl FROM Delivery INNER JOIN DeliveryProduct ON Delivery.DeliveryId = DeliveryProduct.DeliveryId INNER JOIN ProductQuotation ON DeliveryProduct.PQId = ProductQuotation.PQId INNER JOIN ProductListSummary ON ProductQuotation.Sl = ProductListSummary.Sl INNER JOIN MasterStocks ON ProductListSummary.Sl = MasterStocks.Sl WHERE (Delivery.RefNo ='" + SupplierComboBox.Text + "' ) AND (MasterStocks.MQuantity > 0) AND (DeliveryProduct.BacklogQty > 0)";
+                    "SELECT        DeliveryProduct.DeliveryProductId, ProductListSummary.ProductGenericDescription, ProductListSummary.ItemCode, ProductListSummary.ItemDescription, DeliveryProduct.DPQty, DeliveryProduct.BacklogQty, MasterStocks1.MQuantity, ProductListSummary.Sl FROM Delivery INNER JOIN DeliveryProduct ON Delivery.DeliveryId = DeliveryProduct.DeliveryId INNER JOIN ProductQuotation ON DeliveryProduct.PQId = ProductQuotation.PQId INNER JOIN ProductListSummary ON ProductQuotation.Sl = ProductListSummary.Sl INNER JOIN MasterStocks1 ON ProductListSummary.Sl = MasterStocks1.Sl WHERE (Delivery.RefNo ='" + SupplierComboBox.Text + "' ) AND (MasterStocks1.MQuantity > 0) AND (DeliveryProduct.BacklogQty > 0)";
                 cmd = new SqlCommand(qry, con);
                 dataGridView1.Rows.Clear();
                 con.Open();
@@ -221,7 +221,7 @@ namespace WarehouseManagementSystem.UI
                         cmd.ExecuteNonQuery();
                         con.Close();
                         string query3 =
-                            "UPDATE  MasterStocks SET  MQuantity = MQuantity - @d1 WHERE (Sl = @d2)";
+                            "UPDATE  MasterStocks1 SET  MQuantity = MQuantity - @d1 WHERE (Sl = @d2)";
                         cmd = new SqlCommand(query3, con);
                         cmd.Parameters.AddWithValue("@d1", qty);
                         cmd.Parameters.AddWithValue("@d2", listView1.Items[i].SubItems[5].Text);
