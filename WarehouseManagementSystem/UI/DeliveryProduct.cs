@@ -60,6 +60,13 @@ namespace WarehouseManagementSystem.UI
 
         private void DeliveryProduct_Load(object sender, EventArgs e)
         {
+            Deliveryorder();
+           
+        }
+
+        private void Deliveryorder()
+        {
+
             con = new SqlConnection(Cs.DBConn);
             string qry =
                 "SELECT RefNo FROM Delivery";
@@ -71,7 +78,7 @@ namespace WarehouseManagementSystem.UI
                 SupplierComboBox.Items.Add(rdr[0]);
             }
             con.Close();
-           
+
         }
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -230,6 +237,10 @@ namespace WarehouseManagementSystem.UI
                         con.Close();
                     }
                     MessageBox.Show("Shipment Order Done");
+                    SupplierComboBox.Items.Clear();
+                    Deliveryorder();
+
+
                 }
                 else
                 {
