@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>\\KYOTOSERVER\Share\Softwares\Kyoto Ware House Management System\</PublishUrl>
+    <PublishUrl>\\KYOTOSERVER\Share\Software Apps\Kyoto Ware House Management System\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -25,7 +25,9 @@
     <ProductName>Kyoto Warehouse Management System</ProductName>
     <PublisherName>IT Department, Kyoto Engineering &amp; Automation Ltd</PublisherName>
     <MinimumRequiredVersion>1.0.0.17</MinimumRequiredVersion>
-    <ApplicationRevision>18</ApplicationRevision>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>21</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
