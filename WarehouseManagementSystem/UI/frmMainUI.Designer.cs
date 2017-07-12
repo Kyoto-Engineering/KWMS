@@ -38,13 +38,14 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnReceiveOrder = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.deliveryOrderButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.localStoreRoomButton = new System.Windows.Forms.Button();
             this.requisitionApproval = new System.Windows.Forms.Button();
             this.setPriceButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.toolStripContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -147,6 +148,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.deliveryOrderButton);
             this.groupBox1.Controls.Add(this.button2);
@@ -162,6 +164,19 @@
             this.groupBox1.Size = new System.Drawing.Size(410, 646);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.Blue;
+            this.button3.Location = new System.Drawing.Point(156, 81);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(132, 58);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Delivery Order";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // deliveryOrderButton
             // 
@@ -237,18 +252,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button3
+            // button8
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.button3.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.Blue;
-            this.button3.Location = new System.Drawing.Point(156, 81);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(132, 58);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Delivery Order";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button8.Location = new System.Drawing.Point(172, 300);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(67, 46);
+            this.button8.TabIndex = 19;
+            this.button8.Text = "Print Invoice";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // frmMainUI
             // 
@@ -296,5 +308,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button deliveryOrderButton;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button8;
     }
 }

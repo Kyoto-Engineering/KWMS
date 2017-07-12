@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseManagementSystem.LoginUI;
+using WarehouseManagementSystem.Reports;
 
 namespace WarehouseManagementSystem.UI
 {
@@ -122,6 +123,15 @@ namespace WarehouseManagementSystem.UI
         {
             DeliveryProduct  f2=new DeliveryProduct();
             this.Visible = false;
+            f2.ShowDialog();
+            this.Visible = true;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            IUI f2 = new IUI();
+            this.Visible = false;
+
             f2.ShowDialog();
             this.Visible = true;
         }

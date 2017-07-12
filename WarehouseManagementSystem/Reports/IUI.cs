@@ -49,6 +49,11 @@ namespace WarehouseManagementSystem.Reports
         }
         private void IUI_Load(object sender, EventArgs e)
         {
+            refLoad();
+        }
+
+        private void refLoad()
+        {
             try
             {
                 con = new SqlConnection(cs.DBConn);
@@ -70,10 +75,19 @@ namespace WarehouseManagementSystem.Reports
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select Reference Number!");
+            }
+            else
+            {
+                Report1();
+                comboBox1.SelectedIndex = -1;
 
+            }
+            
         }
 
         private void Report1()
