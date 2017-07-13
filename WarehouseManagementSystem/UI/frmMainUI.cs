@@ -135,5 +135,14 @@ namespace WarehouseManagementSystem.UI
             f2.ShowDialog();
             this.Visible = true;
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DeliAckUI f2 = new DeliAckUI();
+            this.Visible = false;
+
+            f2.ShowDialog();
+            this.Visible = true;
+        }
     }
 }
