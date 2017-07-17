@@ -138,11 +138,11 @@ namespace WarehouseManagementSystem.UI
 
         private void button4_Click(object sender, EventArgs e)
         {
-            DeliAckUI f2 = new DeliAckUI();
-            this.Visible = false;
+            //DeliAckUI f2 = new DeliAckUI();
+            //this.Visible = false;
 
-            f2.ShowDialog();
-            this.Visible = true;
+            //f2.ShowDialog();
+            //this.Visible = true;
         }
     }
 }
