@@ -119,7 +119,7 @@ namespace WarehouseManagementSystem.UI
                     button1.Enabled = false;
                     con = new SqlConnection(Cs.DBConn);
                     string q1 =
-                    "INSERT INTO ReturnApproval(RRId, EntryDate, UserId) VALUES  (" + OI + ",@d1," + LoginForm.uId2 + ")";
+                    "INSERT INTO ReturnApproval(RRId, EntryDate, UserId) VALUES  (" + RRid + ",@d1," + LoginForm.uId2 + ")";
                 SqlTransaction trnas;
                 con.Open();
                 trnas = con.BeginTransaction();
@@ -131,7 +131,7 @@ namespace WarehouseManagementSystem.UI
                 {
                     cmd.ExecuteNonQuery();
                     string query ="UPDATE MasterStocks1 SET MQuantity = MQuantity + @d3 WHERE (Sl = @d2)";
-                    cmd = new SqlCommand(query, con);
+                    cmd = new SqlCommand(query, con,trnas);
                     foreach (KeyValuePair<int,int> prdct in productList)
                     {
                         cmd.Parameters.Clear();
