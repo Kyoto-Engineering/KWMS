@@ -98,7 +98,10 @@ namespace WarehouseManagementSystem.UI
         private void ClearselectedProduct()
         {
             impOd = null;
-            textBox1.Clear();
+            orderList.Clear();
+            comboBox1.Items.Clear();
+            productList.Clear();
+ 
         }
 
 
@@ -112,9 +115,7 @@ namespace WarehouseManagementSystem.UI
         {
             if (!string.IsNullOrWhiteSpace(comboBox1.Text))
             {
-            if (string.IsNullOrEmpty(textBox1.Text))
-            {
-
+          
                     button1.Enabled = false;
                     con = new SqlConnection(Cs.DBConn);
                     string q1 =
@@ -139,6 +140,7 @@ namespace WarehouseManagementSystem.UI
                     }
                     cmd.Transaction.Commit();
                     MessageBox.Show("Delivery Order Done");
+                    ClearselectedProduct();
                     ComboLoad();
                     button1.Enabled = true;
                 }
@@ -152,12 +154,7 @@ namespace WarehouseManagementSystem.UI
                 con.Close();
 
 
-                }
-                else
-                {
-                    MessageBox.Show("Give Return Cause");
-                    
-                }
+              
 
             }
             else
