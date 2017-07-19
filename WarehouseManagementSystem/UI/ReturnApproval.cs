@@ -121,11 +121,12 @@ namespace WarehouseManagementSystem.UI
                     string q1 =
                     "INSERT INTO ReturnApproval(RRId, EntryDate, UserId) VALUES  (" + OI + ",@d1," + LoginForm.uId2 + ")";
                 SqlTransaction trnas;
+                con.Open();
                 trnas = con.BeginTransaction();
                     cmd = new SqlCommand(q1, con);
                     cmd.Parameters.AddWithValue("@d1", DateTime.UtcNow.ToLocalTime());
                 cmd.Transaction = trnas;
-                    con.Open();
+                   
                 try
                 {
                     cmd.ExecuteNonQuery();
