@@ -319,6 +319,12 @@
     <Compile Include="UI\RequisitionApproval.Designer.cs">
       <DependentUpon>RequisitionApproval.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ReturnApproval.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ReturnApproval.designer.cs">
+      <DependentUpon>ReturnApproval.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SampleDataGrid.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -452,6 +458,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\RequisitionApproval.resx">
       <DependentUpon>RequisitionApproval.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ReturnApproval.resx">
+      <DependentUpon>ReturnApproval.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SampleDataGrid.resx">
       <DependentUpon>SampleDataGrid.cs</DependentUpon>

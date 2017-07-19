@@ -17,9 +17,9 @@ using WarehouseManagementSystem.LoginUI;
 using ZXing;
 using ZXing.Common;
 
-namespace KyotoSalesManagementSystem.UI
+namespace WarehouseManagementSystem.UI
 {
-    public partial class ReturnRequest : Form
+    public partial class ReturnApproval : Form
     {
         private SqlCommand cmd;
         ConnectionString Cs=new ConnectionString();
@@ -36,7 +36,7 @@ namespace KyotoSalesManagementSystem.UI
         private Dictionary<int,string> orderList=new Dictionary<int, string>();
         private Dictionary<int, int> productList = new Dictionary<int, int>();
 
-        public ReturnRequest()
+        public ReturnApproval()
         {
             InitializeComponent();
         }

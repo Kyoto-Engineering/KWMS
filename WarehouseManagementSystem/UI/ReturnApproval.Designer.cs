@@ -1,6 +1,6 @@
-﻿namespace KyotoSalesManagementSystem.UI
+﻿namespace WarehouseManagementSystem.UI
 {
-    partial class ReturnRequest
+    partial class ReturnApproval
     {
         /// <summary>
         /// Required designer variable.

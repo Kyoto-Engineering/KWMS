@@ -144,5 +144,13 @@ namespace WarehouseManagementSystem.UI
             //f2.ShowDialog();
             //this.Visible = true;
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ReturnApproval fr=new ReturnApproval();
+            this.Visible = false;
+            fr.ShowDialog();
+            this.Visible = true;
+        }
     }
 }
