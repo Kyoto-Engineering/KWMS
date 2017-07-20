@@ -45,7 +45,7 @@
             this.groupBox1.Size = new System.Drawing.Size(414, 207);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Shipment Info";
+            this.groupBox1.Text = "Return Request Info";
             // 
             // button1
             // 
