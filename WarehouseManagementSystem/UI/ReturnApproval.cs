@@ -140,7 +140,7 @@ namespace WarehouseManagementSystem.UI
                         cmd.ExecuteNonQuery();
                     }
                     cmd.Transaction.Commit();
-                    MessageBox.Show("Delivery Order Done");
+                    MessageBox.Show("Request Approved");
                     ClearselectedProduct();
                     ComboLoad();
                     button1.Enabled = true;
@@ -160,7 +160,7 @@ namespace WarehouseManagementSystem.UI
             }
             else
             {
-                MessageBox.Show("Select Delivery Order");
+                MessageBox.Show("Select Return Request No");
             }
         }
         }

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +46,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Shipment Info";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(311, 93);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 57);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Approve Request";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // label1
             // 
@@ -67,16 +77,6 @@
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(311, 93);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 57);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Request Return";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // ReturnApproval
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -84,7 +84,7 @@
             this.ClientSize = new System.Drawing.Size(543, 339);
             this.Controls.Add(this.groupBox1);
             this.Name = "ReturnApproval";
-            this.Text = "ReturnRequest";
+            this.Text = "Return Request Approval";
             this.Load += new System.EventHandler(this.ReturnRequest_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
