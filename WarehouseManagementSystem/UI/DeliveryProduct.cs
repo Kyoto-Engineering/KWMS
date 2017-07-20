@@ -249,7 +249,8 @@ namespace WarehouseManagementSystem.UI
                         cmd.ExecuteNonQuery();
                         con.Close();
                     }
-                    MessageBox.Show("Shipment Order Done");
+                    MessageBox.Show("Delivery Order Done");
+
                     SupplierComboBox.Items.Clear();
                     Deliveryorder();
 

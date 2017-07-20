@@ -333,7 +333,7 @@
             this.groupBox4.Size = new System.Drawing.Size(611, 220);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "groupBox4";
+            this.groupBox4.Text = "Added Product List";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // listView1
