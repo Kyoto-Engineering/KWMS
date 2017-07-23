@@ -277,6 +277,12 @@
     <Compile Include="UI\GridOfFeederStore.Designer.cs">
       <DependentUpon>GridOfFeederStore.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\MasterStocksGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MasterStocksGrid.Designer.cs">
+      <DependentUpon>MasterStocksGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\NewFeederStock.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -437,6 +443,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\GridOfFeederStore.resx">
       <DependentUpon>GridOfFeederStore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MasterStocksGrid.resx">
+      <DependentUpon>MasterStocksGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\NewFeederStock.resx">
       <DependentUpon>NewFeederStock.cs</DependentUpon>
