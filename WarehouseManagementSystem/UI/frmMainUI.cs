@@ -152,5 +152,13 @@ namespace WarehouseManagementSystem.UI
             fr.ShowDialog();
             this.Visible = true;
         }
+
+        private void MStockGridButton_Click(object sender, EventArgs e)
+        {
+            MasterStocksGrid f2 = new MasterStocksGrid();
+            this.Visible = false;
+            f2.ShowDialog();
+            this.Visible = true;
+        }
     }
 }
