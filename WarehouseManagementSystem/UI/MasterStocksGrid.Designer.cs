@@ -46,9 +46,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Location = new System.Drawing.Point(16, 18);
+            this.groupBox1.Location = new System.Drawing.Point(16, 114);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(582, 429);
+            this.groupBox1.Size = new System.Drawing.Size(744, 380);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -72,7 +72,7 @@
             this.dataGridView1.ReadOnly = true;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.Size = new System.Drawing.Size(544, 395);
+            this.dataGridView1.Size = new System.Drawing.Size(706, 346);
             this.dataGridView1.TabIndex = 0;
             // 
             // Column1
@@ -109,7 +109,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 461);
+            this.ClientSize = new System.Drawing.Size(776, 508);
             this.Controls.Add(this.groupBox1);
             this.Name = "MasterStocksGrid";
             this.Text = "MasterStocksGrid";
