@@ -32,13 +32,13 @@ namespace WarehouseManagementSystem.UI
                 con.Open();
                 cmd =
                     new SqlCommand(
-                        "SELECT ProductListSummary.ProductGenericDescription, ProductListSummary.ItemDescription, ProductListSummary.ItemCode, MasterStocks1.MQuantity, ProductListSummary.Price FROM ProductListSummary INNER JOIN MasterStocks1 ON ProductListSummary.Sl = MasterStocks1.Sl",
+                        "SELECT ProductListSummary.ProductGenericDescription, ProductListSummary.ItemDescription, ProductListSummary.ItemCode, Brand.BrandName, MasterStocks1.MQuantity, ProductListSummary.Price FROM Brand INNER JOIN ProductListSummary ON Brand.BrandId = ProductListSummary.BrandId INNER JOIN MasterStocks1 ON ProductListSummary.Sl = MasterStocks1.Sl",
                         con);
                 rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 dataGridView1.Rows.Clear();
                 while (rdr.Read() == true)
                 {
-                    dataGridView1.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4]);
+                    dataGridView1.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4], rdr[5]);
                 }
                 con.Close();
             }
