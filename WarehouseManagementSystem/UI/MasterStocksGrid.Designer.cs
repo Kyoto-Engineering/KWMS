@@ -36,6 +36,7 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -66,7 +67,8 @@
             this.Column2,
             this.Column3,
             this.Column4,
-            this.Column5});
+            this.Column5,
+            this.Column6});
             this.dataGridView1.Location = new System.Drawing.Point(19, 19);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -95,15 +97,21 @@
             // 
             // Column4
             // 
-            this.Column4.HeaderText = "Product Quantity";
+            this.Column4.HeaderText = "Brand";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
             // 
             // Column5
             // 
-            this.Column5.HeaderText = "Price";
+            this.Column5.HeaderText = "Stock Quantity";
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Price";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
             // 
             // MasterStocksGrid
             // 
@@ -130,5 +138,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
     }
 }
