@@ -30,19 +30,24 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.MStockId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sl = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Location = new System.Drawing.Point(16, 18);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(382, 294);
+            this.groupBox1.Size = new System.Drawing.Size(582, 429);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -50,40 +55,57 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.MStockId,
-            this.Sl,
-            this.MQuantity});
-            this.dataGridView1.Location = new System.Drawing.Point(16, 26);
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4,
+            this.Column5});
+            this.dataGridView1.Location = new System.Drawing.Point(19, 19);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(347, 246);
+            this.dataGridView1.Size = new System.Drawing.Size(544, 395);
             this.dataGridView1.TabIndex = 0;
             // 
-            // MStockId
+            // Column1
             // 
-            this.MStockId.HeaderText = "MStockId";
-            this.MStockId.Name = "MStockId";
-            this.MStockId.ReadOnly = true;
+            this.Column1.HeaderText = "Product Name";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             // 
-            // Sl
+            // Column2
             // 
-            this.Sl.HeaderText = "Sl";
-            this.Sl.Name = "Sl";
-            this.Sl.ReadOnly = true;
+            this.Column2.HeaderText = "Product Code";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
-            // MQuantity
+            // Column3
             // 
-            this.MQuantity.HeaderText = "MQuantity";
-            this.MQuantity.Name = "MQuantity";
-            this.MQuantity.ReadOnly = true;
+            this.Column3.HeaderText = "Product Description";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Product Quantity";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Price";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
             // 
             // MasterStocksGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 328);
+            this.ClientSize = new System.Drawing.Size(614, 461);
             this.Controls.Add(this.groupBox1);
             this.Name = "MasterStocksGrid";
             this.Text = "MasterStocksGrid";
@@ -99,8 +121,10 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MStockId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sl;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
     }
 }
