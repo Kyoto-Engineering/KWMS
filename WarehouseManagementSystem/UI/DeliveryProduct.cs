@@ -25,6 +25,7 @@ namespace WarehouseManagementSystem.UI
         private int SupplierId;
         private int Sio;
         private string shipmentOrderNo, clientId, quotationId, brandCode;
+        List<Tuple<int,string>> voucerTuples=new List<Tuple<int, string>>();
 
         public DeliveryProduct()
         {
@@ -71,6 +72,17 @@ namespace WarehouseManagementSystem.UI
             string qry =
                 "SELECT RefNo FROM Delivery";
             cmd = new SqlCommand(qry, con);
+            con.Open();
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                SupplierComboBox.Items.Add(rdr[0]);
+            }
+            con.Close();
+            con = new SqlConnection(Cs.DBConn);
+            string qry1 =
+                "SELECT        GPId, GPNo FROM            GatePasses where GPId not in (select GPId from OutTable)";
+            cmd = new SqlCommand(qry1, con);
             con.Open();
             rdr = cmd.ExecuteReader();
             while (rdr.Read())
