@@ -168,5 +168,13 @@ namespace WarehouseManagementSystem.UI
             f2.ShowDialog();
             this.Visible = true;
         }
+
+        private void ReportsButton_Click(object sender, EventArgs e)
+        {
+            ReportsUI f2 = new ReportsUI();
+            this.Visible = false;
+            f2.ShowDialog();
+            this.Visible = true;
+        }
     }
 }
