@@ -20,12 +20,14 @@ namespace WarehouseManagementSystem.UI
         private SqlConnection con;
         private SqlDataReader rdr;
         private string impOd,sl;
+        private SqlTransaction trans;
         private DataGridViewRow dr;
         private int checkvalue,smId,available;
         private int SupplierId;
-        private int Sio;
+        private int Sio,GPID;
         private string shipmentOrderNo, clientId, quotationId, brandCode;
         List<Tuple<int,string>> voucerTuples=new List<Tuple<int, string>>();
+
 
         public DeliveryProduct()
         {
@@ -62,7 +64,7 @@ namespace WarehouseManagementSystem.UI
         private void DeliveryProduct_Load(object sender, EventArgs e)
         {
             Deliveryorder();
-           
+            LoadGetpasses();
         }
 
         private void Deliveryorder()
@@ -79,6 +81,11 @@ namespace WarehouseManagementSystem.UI
                 SupplierComboBox.Items.Add(rdr[0]);
             }
             con.Close();
+            
+        }
+
+        private void LoadGetpasses()
+        {
             con = new SqlConnection(Cs.DBConn);
             string qry1 =
                 "SELECT        GPId, GPNo FROM            GatePasses where GPId not in (select GPId from OutTable)";
@@ -87,10 +94,16 @@ namespace WarehouseManagementSystem.UI
             rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
-                SupplierComboBox.Items.Add(rdr[0]);
+                Tuple<int, string> xtTuple = new Tuple<int, string>(rdr.GetInt32(0), rdr.GetString(1));
+                voucerTuples.Add(xtTuple);
             }
             con.Close();
-
+            comboBox1.Items.Clear();
+            foreach (Tuple<int, string> voucerTuple in voucerTuples)
+            {
+                comboBox1.Items.Add(voucerTuple.Item2);
+            }
+            
         }
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -212,78 +225,111 @@ namespace WarehouseManagementSystem.UI
          listView1.Items.Clear();
          dataGridView1.Rows.Clear();
          dataGridView1.Refresh();
-     } 
+     }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ProductCodeTextBox.Text))
+            if (string.IsNullOrEmpty(SupplierComboBox.Text))
             {
-                if (listView1.Items.Count>0)
+                if (string.IsNullOrEmpty(comboBox1.Text))
                 {
-
-                    con = new SqlConnection(Cs.DBConn);
-                    string q1 =
-                        "INSERT INTO OutTable  (DeliveryId,UserId ,OutDate) VALUES (@d1,@d2,@d3)" + "SELECT CONVERT(int, SCOPE_IDENTITY())";
-                    cmd=new SqlCommand(q1,con);
-                    cmd.Parameters.AddWithValue("@d1", quotationId);
-                    cmd.Parameters.AddWithValue("@d2", LoginForm.uId2);
-                    cmd.Parameters.AddWithValue("@d3", DateTime.UtcNow.ToLocalTime());
-                    con.Open();
-                    string ShID=cmd.ExecuteScalar().ToString();
-                    con.Close();
-                    for (int i = 0; i <= listView1.Items.Count - 1; i++)
+                    if (string.IsNullOrEmpty(ProductCodeTextBox.Text))
                     {
-                        string imprno = listView1.Items[i].Text;
-                        string qty = listView1.Items[i].SubItems[4].Text;
-                        string query =
-                            "INSERT INTO OutProduct (DeliveryProductId,OutId,OutQty) VALUES(@d1,@d2,@d3)";
-                        cmd=new SqlCommand(query,con);
-                        cmd.Parameters.AddWithValue("@d1", imprno);
-                        cmd.Parameters.AddWithValue("@d2", ShID);
-                        cmd.Parameters.AddWithValue("@d3", qty );
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                        string query2 =
-                            "UPDATE DeliveryProduct SET BacklogQty = BacklogQty -@d1 WHERE (DeliveryProductId = @d2)";
-                        cmd = new SqlCommand(query2, con);
-                        cmd.Parameters.AddWithValue("@d1", qty);
-                        cmd.Parameters.AddWithValue("@d2", imprno);
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                        string query3 =
-                            "UPDATE  MasterStocks1 SET  MQuantity = MQuantity - @d1 WHERE (Sl = @d2)";
-                        cmd = new SqlCommand(query3, con);
-                        cmd.Parameters.AddWithValue("@d1", qty);
-                        cmd.Parameters.AddWithValue("@d2", listView1.Items[i].SubItems[5].Text);
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
+                        if (listView1.Items.Count > 0)
+                        {
+                            try
+                            {
+
+                           
+                            con = new SqlConnection(Cs.DBConn);
+                            con.Open();
+                            trans = con.BeginTransaction();
+                            string q1 =
+                                "INSERT INTO OutTable  (DeliveryId,UserId ,OutDate,GPId) VALUES (@d1,@d2,@d3,"+GPID+")" +
+                                "SELECT CONVERT(int, SCOPE_IDENTITY())";
+                            cmd = new SqlCommand(q1, con,trans);
+                            cmd.Parameters.AddWithValue("@d1", quotationId);
+                            cmd.Parameters.AddWithValue("@d2", LoginForm.uId2);
+                            cmd.Parameters.AddWithValue("@d3", DateTime.UtcNow.ToLocalTime());
+                            
+                            string ShID = cmd.ExecuteScalar().ToString();
+                            //con.Close();
+                            for (int i = 0; i <= listView1.Items.Count - 1; i++)
+                            {
+                                string imprno = listView1.Items[i].Text;
+                                string qty = listView1.Items[i].SubItems[4].Text;
+                                string query =
+                                    "INSERT INTO OutProduct (DeliveryProductId,OutId,OutQty) VALUES(@d1,@d2,@d3)";
+                                cmd = new SqlCommand(query, con,trans);
+                                cmd.Parameters.AddWithValue("@d1", imprno);
+                                cmd.Parameters.AddWithValue("@d2", ShID);
+                                cmd.Parameters.AddWithValue("@d3", qty);
+                                //con.Open();
+                                cmd.ExecuteNonQuery();
+                                //con.Close();
+                                string query2 =
+                                    "UPDATE DeliveryProduct SET BacklogQty = BacklogQty -@d1 WHERE (DeliveryProductId = @d2)";
+                                cmd = new SqlCommand(query2, con,trans);
+                                cmd.Parameters.AddWithValue("@d1", qty);
+                                cmd.Parameters.AddWithValue("@d2", imprno);
+                                //con.Open();
+                                cmd.ExecuteNonQuery();
+                                //con.Close();
+                                string query3 =
+                                    "UPDATE  MasterStocks1 SET  MQuantity = MQuantity - @d1 WHERE (Sl = @d2)";
+                                cmd = new SqlCommand(query3, con,trans);
+                                cmd.Parameters.AddWithValue("@d1", qty);
+                                cmd.Parameters.AddWithValue("@d2", listView1.Items[i].SubItems[5].Text);
+                                //con.Open();
+                                cmd.ExecuteNonQuery();
+                                //con.Close();
+                            }
+                            MessageBox.Show("Delivery Order Done");
+cmd.Transaction.Commit();
+                                con.Close();
+                            Clear();
+                            }
+                            catch (Exception exception)
+                            {
+                                MessageBox.Show(exception.Message, @"Error But We Are Rollbacking");
+                              cmd.Transaction.Rollback();
+                                con.Close();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No Pruduct Added");
+                        }
                     }
-                    MessageBox.Show("Delivery Order Done");
-
-                    SupplierComboBox.Items.Clear();
-                    Deliveryorder();
 
 
+                    else
+                    {
+                        MessageBox.Show(@"May be You forgot to add Last Selected Product\r\n Add The Product", @"Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("No Pruduct Added");
+                    MessageBox.Show(@"Select  Gate Pass No First", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
-                
             }
             else
             {
-                MessageBox.Show("May be You forgot to add Last Selected Product\r\n Add The Product");
+                MessageBox.Show(@"Select Delivery Order No First", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-
             ClearselectedProduct();
             ClearShipmentandgridsinfo();
             groupBox1.Enabled = true;
         }
 
+        private void Clear()
+        {
+            SupplierComboBox.Items.Clear();
+            Deliveryorder();
+            voucerTuples.RemoveAll(x => x.Item1 == GPID);
+            LoadGetpasses();
+        }
 
 
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
@@ -325,6 +371,17 @@ namespace WarehouseManagementSystem.UI
                         listView1.Items[i].Remove();
                     }
                 }
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(comboBox1.Text))
+            {
+                var x = from entry in voucerTuples
+                    where entry.Item2 == comboBox1.Text
+                    select entry.Item1;
+                GPID = x.FirstOrDefault();
             }
         }
     }
