@@ -38,6 +38,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnReceiveOrder = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.MStockGridButton = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -49,7 +50,7 @@
             this.requisitionApproval = new System.Windows.Forms.Button();
             this.setPriceButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.ReportsButton = new System.Windows.Forms.Button();
             this.toolStripContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -152,6 +153,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ReportsButton);
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.MStockGridButton);
             this.groupBox1.Controls.Add(this.button5);
@@ -173,8 +175,19 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(158, 328);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(103, 57);
+            this.button6.TabIndex = 23;
+            this.button6.Text = "Load Get Passes";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // MStockGridButton
             // 
+            this.MStockGridButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.MStockGridButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MStockGridButton.ForeColor = System.Drawing.Color.Blue;
             this.MStockGridButton.Location = new System.Drawing.Point(156, 203);
@@ -182,7 +195,7 @@
             this.MStockGridButton.Size = new System.Drawing.Size(131, 56);
             this.MStockGridButton.TabIndex = 22;
             this.MStockGridButton.Text = "Master Stocks Grid";
-            this.MStockGridButton.UseVisualStyleBackColor = true;
+            this.MStockGridButton.UseVisualStyleBackColor = false;
             this.MStockGridButton.Click += new System.EventHandler(this.MStockGridButton_Click);
             // 
             // button5
@@ -305,15 +318,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button6
+            // ReportsButton
             // 
-            this.button6.Location = new System.Drawing.Point(158, 328);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(103, 57);
-            this.button6.TabIndex = 23;
-            this.button6.Text = "Load Get Passes";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.ReportsButton.Location = new System.Drawing.Point(158, 398);
+            this.ReportsButton.Name = "ReportsButton";
+            this.ReportsButton.Size = new System.Drawing.Size(99, 42);
+            this.ReportsButton.TabIndex = 24;
+            this.ReportsButton.Text = "Reports";
+            this.ReportsButton.UseVisualStyleBackColor = true;
+            this.ReportsButton.Click += new System.EventHandler(this.ReportsButton_Click);
             // 
             // frmMainUI
             // 
@@ -366,5 +379,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button MStockGridButton;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button ReportsButton;
     }
 }
