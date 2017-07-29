@@ -138,11 +138,11 @@ namespace WarehouseManagementSystem.UI
 
         private void button4_Click(object sender, EventArgs e)
         {
-            //DeliAckUI f2 = new DeliAckUI();
-            //this.Visible = false;
+            DeliAckUI f2 = new DeliAckUI();
+            this.Visible = false;
 
-            //f2.ShowDialog();
-            //this.Visible = true;
+            f2.ShowDialog();
+            this.Visible = true;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -156,6 +156,14 @@ namespace WarehouseManagementSystem.UI
         private void MStockGridButton_Click(object sender, EventArgs e)
         {
             MasterStocksGrid f2 = new MasterStocksGrid();
+            this.Visible = false;
+            f2.ShowDialog();
+            this.Visible = true;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            VoucherNumberUI f2 = new VoucherNumberUI();
             this.Visible = false;
             f2.ShowDialog();
             this.Visible = true;
