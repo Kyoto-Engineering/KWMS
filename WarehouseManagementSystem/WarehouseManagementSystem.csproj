@@ -253,6 +253,11 @@
     <Compile Include="Reports\IUI.Designer.cs">
       <DependentUpon>IUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ProductMovement.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductMovement.rpt</DependentUpon>
+    </Compile>
     <Compile Include="Reports\ReportViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -496,6 +501,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\IUI.resx">
       <DependentUpon>IUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ProductMovement.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ProductMovement.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ReportViewer.resx">
       <DependentUpon>ReportViewer.cs</DependentUpon>
