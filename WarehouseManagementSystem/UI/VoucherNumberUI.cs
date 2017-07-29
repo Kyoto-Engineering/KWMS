@@ -96,7 +96,7 @@ namespace WarehouseManagementSystem.UI
                 {
                     //con = new SqlConnection(cs.DBConn);
                     //con.Open();
-                    string query = "INSERT INTO GatePasses (GPNo, GPEId)VALUES (@d1,@d2)";
+                    string query = "INSERT INTO GatePasses (GPEId,GPNo)VALUES (@d1,@d2)";
                     cmd = new SqlCommand(query, con,trans);
                     cmd.Parameters.AddWithValue("@d1", batchId);
                     cmd.Parameters.AddWithValue("@d2", k.ToString());
@@ -111,7 +111,7 @@ namespace WarehouseManagementSystem.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Input String was not in a Correct Format", "Error But We Are Rollebacking", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error But We Are Rollebacking", MessageBoxButtons.OK,MessageBoxIcon.Error);
                 cmd.Transaction.Rollback();
                 con.Close();
             }
