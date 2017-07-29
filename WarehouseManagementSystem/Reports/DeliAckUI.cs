@@ -58,7 +58,7 @@ namespace WarehouseManagementSystem.Reports
             {
                 con = new SqlConnection(cs.DBConn);
                 con.Open();
-                string ct = "select distinct RTRIM(Delivery.RefNo) from Delivery";
+                string ct = "SELECT        Delivery.RefNo FROM Delivery INNER JOIN OutTable ON Delivery.DeliveryId = OutTable.DeliveryId";
                 cmd = new SqlCommand(ct);
                 cmd.Connection = con;
                 rdr = cmd.ExecuteReader();
