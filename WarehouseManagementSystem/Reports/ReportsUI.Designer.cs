@@ -31,11 +31,15 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ProMovementButton = new System.Windows.Forms.Button();
             this.CloseButton = new System.Windows.Forms.Button();
+            this.PrintDeliveryAckButton = new System.Windows.Forms.Button();
+            this.PrintInvoiceButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.PrintInvoiceButton);
+            this.groupBox1.Controls.Add(this.PrintDeliveryAckButton);
             this.groupBox1.Controls.Add(this.ProMovementButton);
             this.groupBox1.Location = new System.Drawing.Point(12, 64);
             this.groupBox1.Name = "groupBox1";
@@ -64,6 +68,26 @@
             this.CloseButton.UseVisualStyleBackColor = true;
             this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
             // 
+            // PrintDeliveryAckButton
+            // 
+            this.PrintDeliveryAckButton.Location = new System.Drawing.Point(166, 19);
+            this.PrintDeliveryAckButton.Name = "PrintDeliveryAckButton";
+            this.PrintDeliveryAckButton.Size = new System.Drawing.Size(130, 61);
+            this.PrintDeliveryAckButton.TabIndex = 21;
+            this.PrintDeliveryAckButton.Text = "Print Delivery Acknowledgement ";
+            this.PrintDeliveryAckButton.UseVisualStyleBackColor = true;
+            this.PrintDeliveryAckButton.Click += new System.EventHandler(this.PrintDeliveryAckButton_Click);
+            // 
+            // PrintInvoiceButton
+            // 
+            this.PrintInvoiceButton.Location = new System.Drawing.Point(324, 21);
+            this.PrintInvoiceButton.Name = "PrintInvoiceButton";
+            this.PrintInvoiceButton.Size = new System.Drawing.Size(103, 57);
+            this.PrintInvoiceButton.TabIndex = 22;
+            this.PrintInvoiceButton.Text = "Print Invoice";
+            this.PrintInvoiceButton.UseVisualStyleBackColor = true;
+            this.PrintInvoiceButton.Click += new System.EventHandler(this.PrintInvoiceButton_Click);
+            // 
             // ReportsUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -84,5 +108,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button ProMovementButton;
         private System.Windows.Forms.Button CloseButton;
+        private System.Windows.Forms.Button PrintDeliveryAckButton;
+        private System.Windows.Forms.Button PrintInvoiceButton;
     }
 }
