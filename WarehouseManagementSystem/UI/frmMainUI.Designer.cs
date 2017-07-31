@@ -38,11 +38,10 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnReceiveOrder = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ReportsButton = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.MStockGridButton = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.deliveryOrderButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -50,7 +49,6 @@
             this.requisitionApproval = new System.Windows.Forms.Button();
             this.setPriceButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.ReportsButton = new System.Windows.Forms.Button();
             this.toolStripContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -157,8 +155,6 @@
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.MStockGridButton);
             this.groupBox1.Controls.Add(this.button5);
-            this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.deliveryOrderButton);
             this.groupBox1.Controls.Add(this.button2);
@@ -175,9 +171,21 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             // 
+            // ReportsButton
+            // 
+            this.ReportsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ReportsButton.ForeColor = System.Drawing.Color.Blue;
+            this.ReportsButton.Location = new System.Drawing.Point(162, 343);
+            this.ReportsButton.Name = "ReportsButton";
+            this.ReportsButton.Size = new System.Drawing.Size(99, 56);
+            this.ReportsButton.TabIndex = 24;
+            this.ReportsButton.Text = "Reports";
+            this.ReportsButton.UseVisualStyleBackColor = true;
+            this.ReportsButton.Click += new System.EventHandler(this.ReportsButton_Click);
+            // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(158, 328);
+            this.button6.Location = new System.Drawing.Point(158, 265);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(103, 57);
             this.button6.TabIndex = 23;
@@ -210,26 +218,6 @@
             this.button5.Text = "Return Approval";
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(263, 264);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(116, 56);
-            this.button4.TabIndex = 20;
-            this.button4.Text = "Print Delivery Acknowledgement ";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(154, 265);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(103, 57);
-            this.button8.TabIndex = 19;
-            this.button8.Text = "Print Invoice";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button3
             // 
@@ -318,16 +306,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // ReportsButton
-            // 
-            this.ReportsButton.Location = new System.Drawing.Point(158, 398);
-            this.ReportsButton.Name = "ReportsButton";
-            this.ReportsButton.Size = new System.Drawing.Size(99, 42);
-            this.ReportsButton.TabIndex = 24;
-            this.ReportsButton.Text = "Reports";
-            this.ReportsButton.UseVisualStyleBackColor = true;
-            this.ReportsButton.Click += new System.EventHandler(this.ReportsButton_Click);
-            // 
             // frmMainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -374,8 +352,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button deliveryOrderButton;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button MStockGridButton;
         private System.Windows.Forms.Button button6;

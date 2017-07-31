@@ -63,5 +63,25 @@ namespace WarehouseManagementSystem.Reports
             f2.ShowDialog();
             this.Visible = true;
         }
+
+       
+
+        private void PrintDeliveryAckButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            DeliAckUI f2 = new DeliAckUI();
+            this.Visible = false;
+            f2.ShowDialog();
+            this.Visible = true;
+        }
+
+        private void PrintInvoiceButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            IUI f2 = new IUI();
+            this.Visible = false;
+            f2.ShowDialog();
+            this.Visible = true;
+        }
     }
 }
