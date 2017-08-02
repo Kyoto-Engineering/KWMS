@@ -33,8 +33,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.ShipmentOrderNoTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SupplierComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -78,8 +76,6 @@
             // 
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.ShipmentOrderNoTextBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.SupplierComboBox);
             this.groupBox1.Location = new System.Drawing.Point(13, 12);
@@ -107,23 +103,6 @@
             this.comboBox1.Size = new System.Drawing.Size(154, 21);
             this.comboBox1.TabIndex = 11;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(63, 116);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(97, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Shipment Order No";
-            // 
-            // ShipmentOrderNoTextBox
-            // 
-            this.ShipmentOrderNoTextBox.Location = new System.Drawing.Point(177, 116);
-            this.ShipmentOrderNoTextBox.Name = "ShipmentOrderNoTextBox";
-            this.ShipmentOrderNoTextBox.ReadOnly = true;
-            this.ShipmentOrderNoTextBox.Size = new System.Drawing.Size(191, 20);
-            this.ShipmentOrderNoTextBox.TabIndex = 5;
             // 
             // label1
             // 
@@ -456,8 +435,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Button DoneButton;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox ShipmentOrderNoTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;

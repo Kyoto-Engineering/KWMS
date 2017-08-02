@@ -72,7 +72,7 @@ namespace WarehouseManagementSystem.UI
 
             con = new SqlConnection(Cs.DBConn);
             string qry =
-                "SELECT RefNo FROM Delivery";
+                "SELECT RefNo FROM Delivery where DeliveryId not in (Select DeliveryId from OutTable)";
             cmd = new SqlCommand(qry, con);
             con.Open();
             rdr = cmd.ExecuteReader();
@@ -217,21 +217,26 @@ namespace WarehouseManagementSystem.UI
      {
          SupplierComboBox.SelectedIndex = -1;
 
-         ShipmentOrderNoTextBox.Clear();
+         //ShipmentOrderNoTextBox.Clear();
 
          SupplierComboBox.ResetText();
 
-
+         comboBox1.SelectedIndex = -1;
+         comboBox1.ResetText();
          listView1.Items.Clear();
          dataGridView1.Rows.Clear();
          dataGridView1.Refresh();
+         SupplierComboBox.Items.Clear();
+         comboBox1.Items.Clear();
+         Deliveryorder();
+         LoadGetpasses();
      }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(SupplierComboBox.Text))
+            if (!string.IsNullOrEmpty(SupplierComboBox.Text))
             {
-                if (string.IsNullOrEmpty(comboBox1.Text))
+                if (!string.IsNullOrEmpty(comboBox1.Text))
                 {
                     if (string.IsNullOrEmpty(ProductCodeTextBox.Text))
                     {
@@ -285,14 +290,14 @@ namespace WarehouseManagementSystem.UI
                                 //con.Close();
                             }
                             MessageBox.Show("Delivery Order Done");
-cmd.Transaction.Commit();
+                                trans.Commit();
                                 con.Close();
                             Clear();
                             }
                             catch (Exception exception)
                             {
                                 MessageBox.Show(exception.Message, @"Error But We Are Rollbacking");
-                              cmd.Transaction.Rollback();
+                                trans.Rollback();
                                 con.Close();
                             }
                         }
