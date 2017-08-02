@@ -146,6 +146,12 @@
       <DependentUpon>BarCode.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CurrentStocksWithoutPrice.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrentStocksWithoutPrice.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CurrentStocks.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -434,6 +440,10 @@
     <EmbeddedResource Include="Reports\BarCode.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>BarCode.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CurrentStocksWithoutPrice.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CurrentStocksWithoutPrice.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CurrentStocks.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
